@@ -22,12 +22,13 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import model.Book;
+import bean.BookBean;
+import model.StoreModel;
 
 @WebServlet(urlPatterns = { "/Start", "/Start/*" })
 public class Start extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Book sisObj;
+	private StoreModel storeObj;
 
 	public Start() {
 		super();
@@ -35,17 +36,24 @@ public class Start extends HttpServlet {
 
 	public void init() throws ServletException {
 		ServletContext context = getServletContext();
-		try {
-			sisObj = new Book();
-			context.setAttribute("sis", sisObj);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+
+//		storeObj = new StoreModel();
+//		context.setAttribute("sis", storeObj);
 
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		storeObj = new StoreModel();
+		try {
+			List<BookBean> books = storeObj.retrieveBooks();
+			request.setAttribute("books", books);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		request.getRequestDispatcher("/MainPage.jspx").forward(request, response);
 
 	}
 
