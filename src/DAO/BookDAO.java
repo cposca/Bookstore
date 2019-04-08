@@ -15,12 +15,15 @@ public class BookDAO {
 	private Connection con = null;
 	// private Statement statement = null;
 	private DataSource ds;
+	final String SERVERURL = "jdbc:mysql://localhost:3306/bookstore2"; //database name bookstore2
+	final String USERNAME = "xxxx"; //Usually root
+	final String PASSWORD = "xxxx";
 
 	public BookDAO() throws ClassNotFoundException {
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookstore2", "root", "xxxx");
+			con = DriverManager.getConnection(SERVERURL, USERNAME, PASSWORD);
 			// ds = (DataSource) (new InitialContext()).lookup("jdbc/bookstore2");
 		} catch (Exception e) {
 			e.printStackTrace();
