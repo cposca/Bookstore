@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import DAO.BookDAO;
 import bean.BookBean;
+import dao.BookDAO;
 
 public class StoreModel {
 
