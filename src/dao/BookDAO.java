@@ -79,8 +79,8 @@ public class BookDAO {
 
 				}
 			}
-		}
 
+		}
 	}
 
 	public void createBook(String isbn, String title, String author, String publisher, String publishYear,
