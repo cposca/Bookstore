@@ -1,4 +1,4 @@
-package DAO;
+package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,49 +12,75 @@ import bean.BookBean;
 
 public class BookDAO {
 
-	private Connection con = null;
-	// private Statement statement = null;
-	private DataSource ds;
-	final String SERVERURL = "jdbc:mysql://localhost:3306/bookstore2"; //database name bookstore2
-	final String USERNAME = "xxxx"; //Usually root
-	final String PASSWORD = "xxxx";
-
 	public BookDAO() throws ClassNotFoundException {
 
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection(SERVERURL, USERNAME, PASSWORD);
-			// ds = (DataSource) (new InitialContext()).lookup("jdbc/bookstore2");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	private List<BookBean> executeQuery(String query) throws SQLException {
-		List<BookBean> rv = new ArrayList<BookBean>();
-		// con = this.ds.getConnection();
-		PreparedStatement p = con.prepareStatement(query);
-		// Statement p = con.prepareStatement(query);
-		ResultSet r = p.executeQuery();
-		while (r.next()) {
-			String isbn = r.getString("BID");
-			String title = r.getString("TITLE");
-			String category = r.getString("CATEGORY");
-			int price = r.getInt("PRICE");
-			rv.add(new BookBean(isbn, title, category, price));
+
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		List<BookBean> bookBean = null;
+
+		try {
+
+			connection = MySQLConnector.getConnection();
+			statement = connection.prepareStatement(query);
+			rs = statement.executeQuery();
+			bookBean = new ArrayList<BookBean>();
+
+			while (rs.next()) {
+				String isbn = rs.getString("BID");
+				String title = rs.getString("TITLE");
+				String category = rs.getString("CATEGORY");
+				int price = rs.getInt("PRICE");
+				bookBean.add(new BookBean(isbn, title, category, price));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (connection != null) {
+				try {
+					rs.close();
+					statement.close();
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+
+				}
+
+			}
+
 		}
-		r.close();
-		p.close();
-		con.close();
-		return rv;
+		return bookBean;
 	}
 
 	private void executeUpdate(String update) throws SQLException {
-		Connection con = this.ds.getConnection();
-		PreparedStatement p = con.prepareStatement(update);
-		p.executeUpdate();
-		p.close();
-		con.close();
+
+		Connection connection = null;
+		PreparedStatement statement = null;
+
+		try {
+			connection = MySQLConnector.getConnection();
+			statement = connection.prepareStatement(update);
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		} finally {
+			if (connection != null) {
+				try {
+					statement.close();
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+
+				}
+			}
+
+		}
 	}
 
 	public void createBook(String isbn, String title, String author, String publisher, String publishYear,
