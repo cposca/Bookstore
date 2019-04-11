@@ -12,20 +12,16 @@ import bean.BookBean;
 
 public class BookDAO {
 
-	private Connection connection;
-	private ResultSet rs;
-	private PreparedStatement statement;
-	private List<BookBean> bookBean;
-
 	public BookDAO() throws ClassNotFoundException {
 
-		this.connection = null;
-		this.rs = null;
-		this.statement = null;
-		this.bookBean = null;
 	}
 
 	private List<BookBean> executeQuery(String query) throws SQLException {
+
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		List<BookBean> bookBean = null;
 
 		try {
 
@@ -61,6 +57,10 @@ public class BookDAO {
 	}
 
 	private void executeUpdate(String update) throws SQLException {
+
+		Connection connection = null;
+		PreparedStatement statement = null;
+
 		try {
 			connection = MySQLConnector.getConnection();
 			statement = connection.prepareStatement(update);
