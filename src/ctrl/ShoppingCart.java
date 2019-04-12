@@ -1,7 +1,6 @@
 package ctrl;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.Servlet;
@@ -12,18 +11,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bean.BookBean;
-import bean.POItemBean;
+import model.ShoppingCartModel;
 import model.StoreModel;
 
 /**
  * Servlet implementation class ShoppingCart
  */
-@WebServlet(urlPatterns = { "/ShoppingCart" })
+@WebServlet(urlPatterns = { "/ShoppingCart", "/shoppingCart" })
 public class ShoppingCart extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	Map<String, POItemBean> shoppingList = new HashMap<String, POItemBean>();
+	ShoppingCartModel shoppingCart;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -36,7 +33,6 @@ public class ShoppingCart extends HttpServlet {
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {
-
 	}
 
 	/**
@@ -52,54 +48,44 @@ public class ShoppingCart extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if (request.getParameter("update") != null) {
-			shoppingList = (HashMap<String, POItemBean>) request.getSession().getAttribute("shoppingList");
-			Map<String, String[]> parametersMap = request.getParameterMap();
-			for (String s : parametersMap.keySet()) {
-				POItemBean POI = shoppingList.get(s);
-				if(Integer.parseInt(parametersMap.get(s)[0]) <= 0) {
-					shoppingList.remove(s);
-				} else {
-					POI.setQuantity(Integer.parseInt(parametersMap.get(s)[0]));
-					shoppingList.put(s, POI);
-				}
-			}
-			request.getSession().setAttribute("shoppingList", shoppingList.values());
-			request.getSession().setAttribute("subTotal", getSubTotal());
+			shoppingCart = (ShoppingCartModel) request.getSession().getAttribute("shoppingCartModel");
 
+			Map<String, String[]> parametersMap = request.getParameterMap();
+			shoppingCart.updateCart(parametersMap);
+			setShoppingAttributes(request);
 			request.getRequestDispatcher("/ShoppingCart.jspx").forward(request, response);
 		} else if (request.getParameter("addToCart") != null) {
 			/**
 			 * when add to cart button is clicked, make a post call to this servlet with
 			 * addToCart as the button name isbn as the parameter with the book isbn value
 			 */
-			shoppingList = (HashMap<String, POItemBean>) request.getSession().getAttribute("shoppingList");
-			String isbn = request.getParameter("isbn");
-			BookBean addedBook = ((StoreModel) request.getServletContext().getAttribute("storeModel"))
-					.getBookDetails(isbn);
-			if (!shoppingList.containsKey(isbn)) {
-				POItemBean tempBean = new POItemBean(222, isbn, addedBook.getPrice(), 1);
-				shoppingList.put(isbn, tempBean);
-			} else {
-				POItemBean tempBean = shoppingList.get(isbn);
-				tempBean.setQuantity(tempBean.getQuantity() + 1);
-				shoppingList.put(isbn, tempBean);
+			shoppingCart = (ShoppingCartModel) request.getSession().getAttribute("shoppingCartModel");
+			if(shoppingCart == null) {
+				shoppingCart = new ShoppingCartModel();
 			}
-//			request.getRequestDispatcher("/ShoppingCart.jspx").forward(request, response);
+			String isbn = request.getParameter("isbn");
+			StoreModel storeModel = (StoreModel) request.getServletContext().getAttribute("storeModel");
+			if(!(isbn.isEmpty()) && isbn != null && storeModel != null) {
+				shoppingCart.addToCart(isbn, storeModel);
+			} else {
+				// TODO: Set error message
+			}
+			setShoppingAttributes(request);
 		} else {
 			request.getRequestDispatcher("/ShoppingCart.jspx").forward(request, response);
 		}
 	}
 
-	private int getSubTotal() {
-		int total = 0;
-		for (POItemBean POI : shoppingList.values()) {
-			total += POI.getPrice() * POI.getQuantity();
-		}
-		return total;
+	private void setShoppingAttributes(HttpServletRequest request) {
+		request.getSession().setAttribute("cartItems", 22);
+		request.getSession().setAttribute("subTotal", shoppingCart.getSubTotal());
+		request.getSession().setAttribute("shoppingList", shoppingCart.getShoppingList());
+		request.getSession().setAttribute("shoppingCartModel", shoppingCart);
 	}
+
+	
 
 }
