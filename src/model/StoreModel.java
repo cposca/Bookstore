@@ -3,8 +3,8 @@ package model;
 import java.util.List;
 import java.util.Map;
 
-import DAO.BookDAO;
 import bean.BookBean;
+import dao.BookDAO;
 
 public class StoreModel {
 	
@@ -30,6 +30,16 @@ public class StoreModel {
 	
 	public BookBean getBookDetails(String isbn) {
 		return storeBooks.get(isbn);
+  }
+  
+	public List<BookBean> retrieveBooks(String category, String search) throws Exception {
+		BookDAO dao = new BookDAO();
+		return dao.retrieveBooks(category, search);
+	}
+
+	public List<String> getCategoryList() throws Exception {
+		BookDAO dao = new BookDAO();
+		return dao.getCategoryList();
 	}
 
 }
