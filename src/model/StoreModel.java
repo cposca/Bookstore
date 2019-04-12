@@ -1,10 +1,5 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,13 +7,32 @@ import bean.BookBean;
 import dao.BookDAO;
 
 public class StoreModel {
+	
+	private BookDAO bookDao;
+	private Map<String, BookBean> storeBooks;
 
-	public StoreModel() {
-
+	public StoreModel() throws ClassNotFoundException {
+		bookDao = new BookDAO();
+		try {
+			List<BookBean> tempList;
+			tempList = retrieveBooks();
+			for(BookBean b: tempList)
+				storeBooks.put(b.getIsbn(), b);
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: make an exception for error handling
+		}
 	}
 
+	public List<BookBean> retrieveBooks() throws Exception {
+		return bookDao.retrieveBooks();
+	}
+	
+	public BookBean getBookDetails(String isbn) {
+		return storeBooks.get(isbn);
+  }
+  
 	public List<BookBean> retrieveBooks(String category, String search) throws Exception {
-
 		BookDAO dao = new BookDAO();
 		return dao.retrieveBooks(category, search);
 	}
