@@ -8,7 +8,6 @@ public class POItemBean {
 	private int quantity;
 	
 	public POItemBean(int id, String isbn, int price, int quantity) {
-		super();
 		this.id = id;
 		this.isbn = isbn;
 		this.price = price;
@@ -25,5 +24,17 @@ public class POItemBean {
 	}
 	public int getQuantity() {
 		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+	public void setPrice(int price) {
+		this.price = price;
 	}
 }
