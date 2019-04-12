@@ -17,10 +17,15 @@ public class StoreModel {
 
 	}
 
-	public List<BookBean> retrieveBooks() throws Exception {
+	public List<BookBean> retrieveBooks(String category, String search) throws Exception {
 
 		BookDAO dao = new BookDAO();
-		return dao.retrieveBooks();
+		return dao.retrieveBooks(category, search);
+	}
+
+	public List<String> getCategoryList() throws Exception {
+		BookDAO dao = new BookDAO();
+		return dao.getCategoryList();
 	}
 
 }
