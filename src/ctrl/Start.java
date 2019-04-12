@@ -25,7 +25,7 @@ import javax.xml.validation.SchemaFactory;
 import bean.BookBean;
 import model.StoreModel;
 
-@WebServlet(urlPatterns = { "/Start", "/Start/*" })
+@WebServlet(urlPatterns = { "/Store", "/Store/*" })
 public class Start extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private StoreModel storeObj;
@@ -47,12 +47,15 @@ public class Start extends HttpServlet {
 
 		storeObj = new StoreModel();
 		try {
-			List<BookBean> books = storeObj.retrieveBooks();
+			List<BookBean> books = storeObj.retrieveBooks(request.getParameter("category"),
+					request.getParameter("search"));
+			List<String> categories = storeObj.getCategoryList();
 			request.setAttribute("books", books);
+			request.setAttribute("categories", categories);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		request.getRequestDispatcher("/MainPage.jspx").forward(request, response);
 
 	}
