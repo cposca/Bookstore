@@ -42,7 +42,8 @@
 							<TR>
 								<TD></TD>
 								<TD></TD>
-								<TD><BUTTON type="submit" name="update">update units</BUTTON></TD>
+								<TD>set quantity to zero to delete item<BR />
+								<BUTTON type="submit" name="update">update units</BUTTON></TD>
 								<TD></TD>
 								<TD></TD>
 							</TR>

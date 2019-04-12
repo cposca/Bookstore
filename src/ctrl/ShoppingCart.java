@@ -60,8 +60,12 @@ public class ShoppingCart extends HttpServlet {
 			Map<String, String[]> parametersMap = request.getParameterMap();
 			for (String s : parametersMap.keySet()) {
 				POItemBean POI = shoppingList.get(s);
-				POI.setQuantity(Integer.parseInt(parametersMap.get(s)[0]));
-				shoppingList.put(s, POI);
+				if(Integer.parseInt(parametersMap.get(s)[0]) <= 0) {
+					shoppingList.remove(s);
+				} else {
+					POI.setQuantity(Integer.parseInt(parametersMap.get(s)[0]));
+					shoppingList.put(s, POI);
+				}
 			}
 			request.getSession().setAttribute("shoppingList", shoppingList.values());
 			request.getSession().setAttribute("subTotal", getSubTotal());
