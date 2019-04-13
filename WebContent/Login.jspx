@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="US-ASCII" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<jsp:directive.page contentType="text/html; charset=US-ASCII" 
+		pageEncoding="US-ASCII" session="true"/>
+	<jsp:output doctype-root-element="html"
+		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+		omit-xml-declaration="true" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>%TODO%%%%%%%%%%%%%%%%%%%%%</title>
+<link rel="StyleSheet" href="res/mc.css" type="text/css" media="screen, print"/>
+</head>
+<body>
+<form action="" method="POST">
+	<fieldset>
+		<legend>Login</legend>
+		<tr>
+			<c:choose>
+				<c:when test="${empty sessionScope['error']} }">
+				</c:when>
+				<c:when test="${!empty sessionScope['error']} }">
+					<h1>${sessionScope['error']}</h1><br/>
+				</c:when>
+			</c:choose>
+			<td>
+				<label>Username:</label>
+			</td>
+			<br/><td>
+				<input name="namePrefix" type="text" value="${sessionScope['namePrefix']}"></input>
+			</td>
+			<br/><td>
+				<label>Password:</label>
+			</td>
+			<br/><td>
+				<input name="minCreditTaken" type="text" value="${sessionScope['minCreditTaken']}"/>
+			</td>
+			<br/><button action='submit' name='signup' >Sign Up</button>
+			<button action='submit' name='login' >Login</button>
+		</tr>
+	</fieldset>
+</form>
+</body>
+</html>
+</jsp:root>

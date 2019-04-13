@@ -25,7 +25,7 @@ public class StoreModel {
 	}
 
 	public List<BookBean> retrieveBooks() throws Exception {
-		return bookDao.retrieveBooks();
+		return null;// bookDao.retrieveBooks();
 	}
 	
 	public BookBean getBookDetails(String isbn) {

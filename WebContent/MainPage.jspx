@@ -47,7 +47,7 @@
 		</c:forEach>
 	</TABLE>
 	<BR />
-	<FORM
+	<FORM>
 		<button action='submit' name='shop' label='shop'>Shopping Cart</button></FORM>
 </body>
 	</html>
