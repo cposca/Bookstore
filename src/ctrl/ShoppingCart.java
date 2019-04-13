@@ -52,10 +52,13 @@ public class ShoppingCart extends HttpServlet {
 			throws ServletException, IOException {
 		if (request.getParameter("update") != null) {
 			shoppingCart = (ShoppingCartModel) request.getSession().getAttribute("shoppingCartModel");
-
-			Map<String, String[]> parametersMap = request.getParameterMap();
-			shoppingCart.updateCart(parametersMap);
-			setShoppingAttributes(request);
+			if (shoppingCart != null) {
+				Map<String, String[]> parametersMap = request.getParameterMap();
+				shoppingCart.updateCart(parametersMap);
+				setShoppingAttributes(request);
+			} else {
+				// TODO: set error
+			}
 			request.getRequestDispatcher("/ShoppingCart.jspx").forward(request, response);
 		} else if (request.getParameter("addToCart") != null) {
 			/**
@@ -63,12 +66,12 @@ public class ShoppingCart extends HttpServlet {
 			 * addToCart as the button name isbn as the parameter with the book isbn value
 			 */
 			shoppingCart = (ShoppingCartModel) request.getSession().getAttribute("shoppingCartModel");
-			if(shoppingCart == null) {
+			if (shoppingCart == null) {
 				shoppingCart = new ShoppingCartModel();
 			}
 			String isbn = request.getParameter("isbn");
 			StoreModel storeModel = (StoreModel) request.getServletContext().getAttribute("storeModel");
-			if(!(isbn.isEmpty()) && isbn != null && storeModel != null) {
+			if (!(isbn.isEmpty()) && isbn != null && storeModel != null) {
 				shoppingCart.addToCart(isbn, storeModel);
 			} else {
 				// TODO: Set error message
@@ -85,7 +88,5 @@ public class ShoppingCart extends HttpServlet {
 		request.getSession().setAttribute("shoppingList", shoppingCart.getShoppingList());
 		request.getSession().setAttribute("shoppingCartModel", shoppingCart);
 	}
-
-	
 
 }
