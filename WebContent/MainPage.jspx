@@ -12,7 +12,24 @@
 <title>Book Store Main Page</title>
 </head>
 <body>
-	<h1>Book Store1</h1>
+	<h1>Book Store</h1>
+
+	<form action="Store" method="GET">
+		<input type="text" name="search" />
+		<button type="submit">search</button>
+	</form>
+	<BR />
+	<a href="Store">Home</a>
+
+	<BR />
+	<c:forEach items="${requestScope['categories']}" var="category">
+
+		<a href="Store?category=${category}"><c:out value="${category}" /></a>
+		<BR />
+
+
+	</c:forEach>
+	<BR />
 	<TABLE border="1">
 		<TR>
 			<TH>Category</TH>
@@ -29,6 +46,9 @@
 			</TR>
 		</c:forEach>
 	</TABLE>
+	<BR />
+	<FORM
+		<button action='submit' name='shop' label='shop'>Shopping Cart</button></FORM>
 </body>
 	</html>
 </jsp:root>
