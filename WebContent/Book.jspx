@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:directive.page contentType="text/html; charset=ISO-8859-1"
+		pageEncoding="ISO-8859-1" session="false" />
+	<jsp:output doctype-root-element="html"
+		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+		omit-xml-declaration="true" />
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Book Store Main Page</title>
+</head>
+<body>
+	<a href="../Store">Home</a>
+	<BR />
+	<h1>Book: ${book.getTitle()}</h1>
+	<b>${book.getCategory()}</b>
+	<BR />
+	<b>Price: </b>${book.getPrice()}<BR />
+	<b>Book ID: </b>${book.getIsbn()}<BR />
+
+	<BR />
+
+	<FORM method="post">
+		<H2>Add Review</H2>
+		<label>Name: </label> <input type="text" name="name" /> <br />
+		<TEXTAREA rows="3" cols="100" name="review"
+			placeholder="Enter your review">Enter your review
+		</TEXTAREA>
+		<BR />
+		<button type="submit" name="addReview">Add Review</button>
+
+	</FORM>
+	<BR />
+	<BR />
+	<c:if test="${!requestScope['reviews'].isEmpty()}">
+		<TABLE border="1">
+			<TR>
+				<TH>Name</TH>
+				<TH>Date</TH>
+				<TH>Review</TH>
+
+
+			</TR>
+			<c:forEach items="${requestScope['reviews']}" var="review">
+				<TR>
+					<TD><c:out value="${review.getName()}" /></TD>
+					<TD><c:out value="${review.getDate()}" /></TD>
+					<TD><c:out value="${review.getReview()}" /></TD>
+
+				</TR>
+			</c:forEach>
+		</TABLE>
+	</c:if>
+</body>
+	</html>
+</jsp:root>

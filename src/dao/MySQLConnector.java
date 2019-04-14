@@ -8,7 +8,7 @@ public class MySQLConnector {
 	private static MySQLConnector instance = new MySQLConnector();
 	public static final String SERVERURL = "jdbc:mysql://localhost:3306/bookstore2"; // database name bookstore2
 	public static final String USERNAME = "root"; // Usually root
-	public static final String PASSWORD = "xxxx";
+	public static final String PASSWORD = "root";
 	public static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
 
 	private MySQLConnector() {
