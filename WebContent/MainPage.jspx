@@ -58,9 +58,6 @@
 		</c:forEach>
 	</TABLE>
 	<BR />
-	<FORM>
-		<button action='submit' name='shop' label='shop'>Shopping Cart</button>
-	</FORM>
 </body>
 	</html>
 </jsp:root>

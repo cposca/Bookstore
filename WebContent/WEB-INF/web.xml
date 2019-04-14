@@ -12,7 +12,7 @@
 	</servlet>
 	<servlet-mapping>
 	<servlet-name>Start</servlet-name>
-	<url-pattern>/Store/Start</url-pattern>
+	<url-pattern></url-pattern>
   </servlet-mapping>
   
   <filter>
