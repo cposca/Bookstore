@@ -23,18 +23,19 @@ public class VisitEventDAO {
 		}
 	}
 	
-	public List<VisitEventBean> retrieve(int id, String status) throws SQLException{
-		String query = "select * from VisitEvent where id = '" + id + "' AND status = '" + status + "';";
+	public List<VisitEventBean> retrieveByStatus(String status) throws SQLException{
+		String query = "select * from VisitEvent where status = '" + status + "';";
 		List<VisitEventBean> rv = new ArrayList<VisitEventBean>();
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
 		while(r.next()) {
-			int i = r.getInt("ID");
+			int id = r.getInt("ID");
+			String username = r.getString("USERNAME");
 			String timestamp = r.getString("TIMESTAMP");
-			String eventType = r.getString("EVENTTYPE");
 			String s = r.getString("STATUS");
-			rv.add(new VisitEventBean(i,timestamp,eventType,s));
+			String token = r.getString("TOKEN");
+			rv.add(new VisitEventBean(id,username,timestamp,s,token));
 		}
 		r.close();
 		p.close();
@@ -42,8 +43,48 @@ public class VisitEventDAO {
 		return rv;
 	}
 	
-	public void create(int id, String timestamp, int eventType, int status) throws SQLException {
-		String update = "INSERT INTO VisitEvent (id, timestamp, eventType, status) VALUES ('" + id + "', " + timestamp + "', " + eventType + "', " + status + "');";
+	public List<VisitEventBean> retrieveByUsername(String username) throws SQLException{
+		String query = "select * from VisitEvent where username = '" + username + "';";
+		List<VisitEventBean> rv = new ArrayList<VisitEventBean>();
+		Connection con = this.ds.getConnection();
+		PreparedStatement p = con.prepareStatement(query);
+		ResultSet r = p.executeQuery();
+		while(r.next()) {
+			int id = r.getInt("ID");
+			String u = r.getString("USERNAME");
+			String timestamp = r.getString("TIMESTAMP");
+			String status = r.getString("STATUS");
+			String token = r.getString("TOKEN");
+			rv.add(new VisitEventBean(id,u,timestamp,status,token));
+		}
+		r.close();
+		p.close();
+		con.close();
+		return rv;
+	}
+	
+	public List<VisitEventBean> retrieveByToken(String token) throws SQLException{
+		String query = "select * from VisitEvent where token = '" + token + "';";
+		List<VisitEventBean> rv = new ArrayList<VisitEventBean>();
+		Connection con = this.ds.getConnection();
+		PreparedStatement p = con.prepareStatement(query);
+		ResultSet r = p.executeQuery();
+		while(r.next()) {
+			int id = r.getInt("ID");
+			String username = r.getString("USERNAME");
+			String timestamp = r.getString("TIMESTAMP");
+			String status = r.getString("STATUS");
+			String t = r.getString("TOKEN");
+			rv.add(new VisitEventBean(id,username,timestamp,status,t));
+		}
+		r.close();
+		p.close();
+		con.close();
+		return rv;
+	}
+	
+	public void create(String username, String timestamp, String status, String token) throws SQLException {
+		String update = "INSERT INTO VisitEvent (username, timestamp, status, token) VALUES ('" + username + "', " + timestamp + "', " + status + "', " + token + "');";
 		Connection con = this.ds.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
 		p.executeUpdate();
