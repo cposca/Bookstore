@@ -21,12 +21,7 @@ public class OrderService extends Service{
 	
 	@Override
 	protected boolean InstantiateDAO() {
-		try {
-			orderInformation = new POItemDAO();
-		} catch (ClassNotFoundException e) {
-			daoAvailable = false;
-			e.printStackTrace();
-		}
+		orderInformation = new POItemDAO();
 		return daoAvailable;
 	}
 	

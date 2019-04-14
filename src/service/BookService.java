@@ -16,12 +16,7 @@ public class BookService extends Service{
 
 	@Override
 	protected boolean InstantiateDAO() {
-		try {
-			bookData = new BookDAO();
-		} catch (ClassNotFoundException e) {
-			daoAvailable = false;
-			e.printStackTrace();
-		}
+		bookData = new BookDAO();
 		return daoAvailable;
 	}
 	
