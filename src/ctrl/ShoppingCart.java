@@ -1,6 +1,7 @@
 package ctrl;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.Servlet;
@@ -33,6 +34,7 @@ public class ShoppingCart extends HttpServlet {
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {
+		
 	}
 
 	/**
@@ -52,10 +54,16 @@ public class ShoppingCart extends HttpServlet {
 			throws ServletException, IOException {
 		if (request.getParameter("update") != null) {
 			shoppingCart = (ShoppingCartModel) request.getSession().getAttribute("shoppingCartModel");
-
-			Map<String, String[]> parametersMap = request.getParameterMap();
-			shoppingCart.updateCart(parametersMap);
-			setShoppingAttributes(request);
+			if(shoppingCart != null) {
+				Map<String, String[]> parametersMap = new HashMap<String, String[]>(request.getParameterMap());
+				parametersMap.remove("addToCart");
+				parametersMap.remove("update");
+				parametersMap.remove("isbn");
+				shoppingCart.updateCart(parametersMap);
+				setShoppingAttributes(request);
+			} else {
+				//TODO: Set error 
+			}
 			request.getRequestDispatcher("/ShoppingCart.jspx").forward(request, response);
 		} else if (request.getParameter("addToCart") != null) {
 			/**
@@ -67,8 +75,6 @@ public class ShoppingCart extends HttpServlet {
 				shoppingCart = new ShoppingCartModel();
 			}
 			String isbn = request.getParameter("isbn");
-			// StoreModel storeModel = (StoreModel)
-			// request.getServletContext().getAttribute("storeModel");
 			StoreModel storeModel = new StoreModel();
 			if (!(isbn.isEmpty()) && isbn != null && storeModel != null) {
 				try {

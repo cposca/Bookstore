@@ -52,7 +52,6 @@ public class Start extends HttpServlet {
 				List<ReviewBean> reviews = storeModel.getReviewList(request.getParameter("bid"));
 				request.setAttribute("reviews", reviews);
 				request.getRequestDispatcher("/Book.jspx").forward(request, response);
-				
 
 			} else {
 
