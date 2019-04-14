@@ -10,7 +10,7 @@ import dao.BookDAO;
 public class StoreModel {
 
 	BookDAO dao;
-	
+
 	public StoreModel() {
 		dao = new BookDAO();
 	}

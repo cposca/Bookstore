@@ -14,16 +14,23 @@
 <body>
 	<h1>Book Store</h1>
 
+	<BR />
+	<a href="Store">Home</a> &amp;nbsp;
+	<a href="Login">Login</a> &amp;nbsp;
+	<a href="ShoppingCart">Shopping Cart</a>
+	<BR />
+	<BR />
+
 	<form action="Store" method="GET">
 		<input type="text" name="search" />
 		<button type="submit">search</button>
 	</form>
-	<BR />
-	<a href="ShoppingCart">Shopping Cart</a>
-	<BR />
-	<a href="Store">Home</a>
 
+
+	<h3>Categories:</h3>
+	<a href="Store">All</a>
 	<BR />
+
 	<c:forEach items="${requestScope['categories']}" var="category">
 
 		<a href="Store?category=${category}"><c:out value="${category}" /></a>
