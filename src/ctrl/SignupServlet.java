@@ -1,11 +1,16 @@
 package ctrl;
 
 import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import bean.LoginBean;
+import dao.LoginDAO;
+import dao.UserDAO;
 
 /**
  * Servlet implementation class SignupServlet
@@ -43,6 +48,7 @@ public class SignupServlet extends HttpServlet {
 			String province = request.getParameter("province");
 			String zip = request.getParameter("zip");
 			String phone = request.getParameter("phone");
+			LoginDAO loginDAO = new LoginDAO();
 		}
 		request.getRequestDispatcher(signupPage).forward(request,response);
 	}

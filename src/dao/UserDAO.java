@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import bean.UserBean;
 
 public class UserDAO {
@@ -11,33 +14,35 @@ public class UserDAO {
 	public UserDAO() {
 	}
 	
-	private UserBean executeQuery(String query) throws SQLException {
+	private List<UserBean> executeQuery(String query) throws SQLException {
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
-		r.next();
-		String username = r.getString("USERNAME");
-		String password = r.getString("PASSWORD");
-		String email = r.getString("EMAIL");
-		String fname = r.getString("FNAME");
-		String lname = r.getString("LNAME");
+		List<UserBean> rv = new ArrayList<UserBean>();
+		while(r.next()) {
+			int id = r.getInt("ID");
+			String email = r.getString("EMAIL");
+			String fname = r.getString("FNAME");
+			String lname = r.getString("LNAME");
+			rv.add(new UserBean(id,email,fname,lname));
+		}
 		r.close();
 		p.close();
 		con.close();
-		return new UserBean(username,password,email,fname,lname);
+		return rv;
 	}
 	
-	public UserBean retrieveById(int id) throws SQLException{
+	public List<UserBean> retrieveById(int id) throws SQLException{
 		String query = "select * from user where id = " + id;
 		return executeQuery(query);
 	}
 	
-	public UserBean retrieveByName(String fname, String lname) throws SQLException{
+	public List<UserBean> retrieveByName(String fname, String lname) throws SQLException{
 		String query = "select * from user where fname = '" + lname + "' AND lname = '" + lname + "';";
 		return executeQuery(query);
 	}
 	
-	public UserBean retrieveByEmail(String email) throws SQLException{
+	public List<UserBean> retrieveByEmail(String email) throws SQLException{
 		String query = "select * from user where email = '" + email;
 		return executeQuery(query);
 	}

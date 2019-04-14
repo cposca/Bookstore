@@ -21,8 +21,9 @@ import dao.VisitEventDAO;
 @WebServlet(urlPatterns = { "/Login", "/Login/*" })
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private String signupPage = "/Signup.jspx";
+	private String signupServlet = "Signup";
 	private String loginPage = "/Login.jspx";	
+	private String mainPage = "/MainPage.jspx";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -43,10 +44,11 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getSession().removeAttribute("error");
 		if(!(request.getParameter("signup") == null)) {
-			request.getRequestDispatcher(signupPage).forward(request,response);
+			response.sendRedirect(signupServlet);
 		}else if(!(request.getParameter("login") == null)) {
-			try {
+			/*try {
 				LoginDAO l = new LoginDAO();
 				String username = request.getParameter("username");
 				List<LoginBean> query = l.retrieve(username);
@@ -63,18 +65,15 @@ public class LoginServlet extends HttpServlet {
 						visitDAO.create(username, timestamp, status, token);
 						request.getSession().setAttribute("sessionToken", token);
 						request.getSession().setAttribute("username",username);
+						request.getRequestDispatcher(mainPage).forward(request,response);
 					}else {
 						request.getSession().setAttribute("error", "Incorrect Password!");
 					}
 				}
-				//TODO
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 		} else {
 			request.getRequestDispatcher(loginPage).forward(request,response);
 		}
