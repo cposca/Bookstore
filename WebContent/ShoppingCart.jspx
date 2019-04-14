@@ -15,7 +15,7 @@
 <body>
 	<section id="banner"></section>
 	<section id="shoppingCart">
-		<form action="" method="post" onsubmit="return validate();">
+		<form action="ShoppingCart" method="post">
 
 			<c:choose>
 				<c:when test="${shoppingList ne null}">
@@ -43,7 +43,7 @@
 								<TD></TD>
 								<TD></TD>
 								<TD>set quantity to zero to delete item<BR />
-									<BUTTON type="submit" name="update">update units</BUTTON></TD>
+									<BUTTON type="submit" name="update" value="true">update units</BUTTON></TD>
 								<TD></TD>
 								<TD></TD>
 							</TR>
