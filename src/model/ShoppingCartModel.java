@@ -15,7 +15,7 @@ public class ShoppingCartModel {
 		shoppingList = new HashMap<String, POItemBean>();
 	}
 
-	public Map<String, POItemBean> addToCart(String isbn, StoreModel storeModel) {
+	public Map<String, POItemBean> addToCart(String isbn, StoreModel storeModel) throws Exception {
 		BookBean addedBook = storeModel.getBookDetails(isbn);
 		if (!shoppingList.containsKey(isbn)) {
 			POItemBean tempBean = new POItemBean(222, isbn, addedBook.getPrice(), 1);
@@ -40,10 +40,11 @@ public class ShoppingCartModel {
 		}
 		return shoppingList;
 	}
-	public Collection<POItemBean> getShoppingList(){
+
+	public Collection<POItemBean> getShoppingList() {
 		return shoppingList.values();
 	}
-	
+
 	public int getSubTotal() {
 		int total = 0;
 		for (POItemBean POI : shoppingList.values()) {

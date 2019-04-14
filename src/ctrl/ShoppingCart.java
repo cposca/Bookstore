@@ -63,17 +63,24 @@ public class ShoppingCart extends HttpServlet {
 			 * addToCart as the button name isbn as the parameter with the book isbn value
 			 */
 			shoppingCart = (ShoppingCartModel) request.getSession().getAttribute("shoppingCartModel");
-			if(shoppingCart == null) {
+			if (shoppingCart == null) {
 				shoppingCart = new ShoppingCartModel();
 			}
 			String isbn = request.getParameter("isbn");
-			StoreModel storeModel = (StoreModel) request.getServletContext().getAttribute("storeModel");
-			if(!(isbn.isEmpty()) && isbn != null && storeModel != null) {
-				shoppingCart.addToCart(isbn, storeModel);
+			// StoreModel storeModel = (StoreModel)
+			// request.getServletContext().getAttribute("storeModel");
+			StoreModel storeModel = new StoreModel();
+			if (!(isbn.isEmpty()) && isbn != null && storeModel != null) {
+				try {
+					shoppingCart.addToCart(isbn, storeModel);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			} else {
 				// TODO: Set error message
 			}
 			setShoppingAttributes(request);
+			request.getRequestDispatcher("/ShoppingCart.jspx").forward(request, response);
 		} else {
 			request.getRequestDispatcher("/ShoppingCart.jspx").forward(request, response);
 		}
@@ -85,7 +92,5 @@ public class ShoppingCart extends HttpServlet {
 		request.getSession().setAttribute("shoppingList", shoppingCart.getShoppingList());
 		request.getSession().setAttribute("shoppingCartModel", shoppingCart);
 	}
-
-	
 
 }
