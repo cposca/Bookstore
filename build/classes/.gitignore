@@ -1,4 +1,5 @@
-/ctrl/
 /dao/
-/model/
 /bean/
+/filter/
+/ctrl/
+/model/

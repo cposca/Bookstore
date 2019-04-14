@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="US-ASCII" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<jsp:directive.page contentType="text/html; charset=US-ASCII" 
+		pageEncoding="US-ASCII" session="true"/>
+	<jsp:output doctype-root-element="html"
+		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+		omit-xml-declaration="true" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>%TODO%%%%%%%%%%%%%%%%%%%%%</title>
+<link rel="StyleSheet" href="res/mc.css" type="text/css" media="screen, print"/>
+<script type="text/javascript" src="res/signup.js">;</script>
+</head>
+<body>
+<form action="" method="POST">
+	<fieldset>
+		<legend>Signup</legend>
+		<tr>
+			<c:choose>
+				<c:when test="${empty sessionScope['error']} }">
+				</c:when>
+				<c:when test="${!empty sessionScope['error']} }">
+					<h1>${sessionScope['error']}</h1><br/>
+				</c:when>
+			</c:choose>
+			<td>
+				<label>Username:</label>
+			</td><br/>
+			<td>
+				<input name="username" type="text" value="${sessionScope['username']}"></input>
+			</td><br/>
+			<td>
+				<label>Password:</label>
+			</td><br/>
+			<td>
+				<input name="password" type="password"></input>
+			</td><br/>
+			<td>
+				<label>Repeat Password:</label>
+			</td><br/>
+			<td>
+				<input name="repeatPassword" type="password"></input>
+			</td><br/>
+			<td>
+				<label>Street:</label>
+			</td><br/>
+			<td>
+				<input name="Street Name and Number" type="text" value="${sessionScope['street']}"></input>
+			</td><br/>
+						<td>
+				<label>Country:</label>
+			</td><br/>
+			<td>
+				<select id="countryList" name="country" onchange="updateProvinces()">
+				    <option value="CA">Canada</option>
+				    <option value="USA">USA</option>
+				  </select>
+			</td><br/>
+			<td>
+				<label>Province:</label>
+			</td><br/>
+			<td>
+				<select id="provinceList" name="province">
+				    <option value="ab">AB</option>
+				    <option value="bc">BC</option>
+				    <option value="mb">MB</option>
+				    <option value="nb">NB</option>
+				    <option value="nl">NL</option>
+				    <option value="ns">NS</option>
+				    <option value="on">ON</option>
+				    <option value="pe">PE</option>
+				    <option value="nt">NT</option>
+				    <option value="qc">QC</option>
+				    <option value="yt">YT</option>
+				    <option value="nu">NU</option>
+				  </select>
+			</td><br/>
+			<td>
+				<label>Zip Code:</label>
+			</td><br/>
+			<td>
+				<input name="zip" type="text" value="${sessionScope['zip']}"></input>
+			</td><br/>
+			<td>
+				<label>Phone Number:</label>
+			</td><br/>
+			<td>
+				<input name="phone" type="text" value="${sessionScope['phone']}"></input>
+			</td><br/><button action='submit' name='signup' >Sign Up</button>
+		</tr>
+	</fieldset>
+</form>
+</body>
+</html>
+</jsp:root>

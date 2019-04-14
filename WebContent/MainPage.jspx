@@ -58,7 +58,6 @@
 		</c:forEach>
 	</TABLE>
 	<BR />
-
 </body>
 	</html>
 </jsp:root>
