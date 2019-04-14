@@ -12,11 +12,7 @@ public class StoreModel {
 	BookDAO dao;
 	
 	public StoreModel() {
-		try {
-			dao = new BookDAO();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+		dao = new BookDAO();
 	}
 
 	public BookBean getBookDetails(String bid) throws Exception {
