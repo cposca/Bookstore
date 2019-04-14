@@ -22,6 +22,9 @@
 
 	<BR />
 
+	<a href="../Login">Login</a>
+		<BR />
+
 	<FORM method="post">
 		<H2>Add Review</H2>
 		<label>Name: </label> <input type="text" name="name" /> <br />

@@ -11,13 +11,9 @@ public class StoreModel {
 
 	private Map<String, BookBean> storeBooks;
 	BookDAO dao;
-	
+
 	public StoreModel() {
-		try {
-			dao = new BookDAO();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+		dao = new BookDAO();
 	}
 
 	public BookBean getBookDetails(String bid) throws Exception {
