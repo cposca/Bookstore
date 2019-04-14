@@ -6,29 +6,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
 import bean.CommerceEventBean;
 
 public class CommerceEventDAO {
-	
-	private DataSource ds;
-	
-	public CommerceEventDAO() throws ClassNotFoundException{
-		try {
-			ds = (DataSource) (new InitialContext()).lookup("java:/comp/env/jdbc/EECS");
-		} catch(NamingException e) {
-			e.printStackTrace();
-		}
+
+	public CommerceEventDAO(){
 	}
 	
 	public List<CommerceEventBean> retrieve(int isbn) throws SQLException{
 		String query = "select * from CommerceEvent where isbn = " + isbn;
 		List<CommerceEventBean> rv = new ArrayList<CommerceEventBean>();
-		Connection con = this.ds.getConnection();
+		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
 		while(r.next()) {
@@ -45,7 +33,7 @@ public class CommerceEventDAO {
 	
 	public void create(String isbn, String timestamp, String eventType) throws SQLException {
 		String update = "INSERT INTO CommerceEvent (isbn, timestamp, eventType) VALUES ('" + isbn + "', " + timestamp + "', " + eventType + "');";
-		Connection con = this.ds.getConnection();
+		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
 		p.executeUpdate();
 		p.close();

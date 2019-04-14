@@ -6,27 +6,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 import bean.VisitEventBean;
 
 public class VisitEventDAO {
 	
-	private DataSource ds;
 	
-	public VisitEventDAO() throws ClassNotFoundException{
-		try {
-			ds = (DataSource) (new InitialContext()).lookup("java:/comp/env/jdbc/EECS");
-		} catch(NamingException e) {
-			e.printStackTrace();
-		}
+	public VisitEventDAO() {
 	}
 	
 	public List<VisitEventBean> retrieveByStatus(String status) throws SQLException{
 		String query = "select * from VisitEvent where status = '" + status + "';";
 		List<VisitEventBean> rv = new ArrayList<VisitEventBean>();
-		Connection con = this.ds.getConnection();
+		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
 		while(r.next()) {
@@ -46,7 +37,7 @@ public class VisitEventDAO {
 	public List<VisitEventBean> retrieveByUsername(String username) throws SQLException{
 		String query = "select * from VisitEvent where username = '" + username + "';";
 		List<VisitEventBean> rv = new ArrayList<VisitEventBean>();
-		Connection con = this.ds.getConnection();
+		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
 		while(r.next()) {
@@ -66,7 +57,7 @@ public class VisitEventDAO {
 	public List<VisitEventBean> retrieveByToken(String token) throws SQLException{
 		String query = "select * from VisitEvent where token = '" + token + "';";
 		List<VisitEventBean> rv = new ArrayList<VisitEventBean>();
-		Connection con = this.ds.getConnection();
+		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
 		while(r.next()) {
@@ -85,7 +76,7 @@ public class VisitEventDAO {
 	
 	public void create(String username, String timestamp, String status, String token) throws SQLException {
 		String update = "INSERT INTO VisitEvent (username, timestamp, status, token) VALUES ('" + username + "', " + timestamp + "', " + status + "', " + token + "');";
-		Connection con = this.ds.getConnection();
+		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
 		p.executeUpdate();
 		p.close();
