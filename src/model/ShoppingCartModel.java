@@ -1,7 +1,9 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import bean.BookBean;
@@ -41,8 +43,11 @@ public class ShoppingCartModel {
 		return shoppingList;
 	}
 
-	public Collection<POItemBean> getShoppingList() {
-		return shoppingList.values();
+	public List<POItemBean> getShoppingList() {
+		ArrayList<POItemBean> result = new ArrayList<POItemBean>();
+		for(POItemBean POI: shoppingList.values())
+			result.add(POI);
+		return result;
 	}
 
 	public int getSubTotal() {

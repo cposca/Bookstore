@@ -11,6 +11,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 <head>
 <title>%TODO%%%%%%%%%%%%%%%%%%%%%</title>
 <link rel="StyleSheet" href="res/mc.css" type="text/css" media="screen, print"/>
+<script type="text/javascript" src="res/signup.js">;</script>
 </head>
 <body>
 <form action="" method="POST">
@@ -52,16 +53,16 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 				<label>Country:</label>
 			</td><br/>
 			<td>
-				<select name="country" onchange="updateProvinces(this.value)">
-				    <option value="ca">Canada</option>
-				    <option value="us">U.S</option>
+				<select id="countryList" name="country" onchange="updateProvinces()">
+				    <option value="CA">Canada</option>
+				    <option value="USA">USA</option>
 				  </select>
 			</td><br/>
 			<td>
 				<label>Province:</label>
 			</td><br/>
 			<td>
-				<select name="province">
+				<select id="provinceList" name="province">
 				    <option value="ab">AB</option>
 				    <option value="bc">BC</option>
 				    <option value="mb">MB</option>

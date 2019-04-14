@@ -52,22 +52,17 @@ public class Start extends HttpServlet {
 				List<ReviewBean> reviews = storeModel.getReviewList(request.getParameter("bid"));
 				request.setAttribute("reviews", reviews);
 				request.getRequestDispatcher("/Book.jspx").forward(request, response);
-				
-
 			} else {
-
 				List<BookBean> books = storeModel.retrieveBooks(request.getParameter("category"),
 						request.getParameter("search"));
 				List<String> categories = storeModel.getCategoryList();
 				request.setAttribute("books", books);
 				request.setAttribute("categories", categories);
 				request.getRequestDispatcher("/MainPage.jspx").forward(request, response);
-
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		// request.getRequestDispatcher("/MainPage.jspx").forward(request, response);
 
 	}

@@ -5,12 +5,12 @@
     <welcome-file>Signup.jspx</welcome-file>
   </welcome-file-list>
   <servlet>
-    <servlet-name>Start</servlet-name>
-    <servlet-class>ctrl.Start</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Start</servlet-name>
-    <url-pattern>/Store/Start</url-pattern>
+	<servlet-name>Start</servlet-name>
+	<servlet-class>ctrl.Start</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	<servlet-name>Start</servlet-name>
+	<url-pattern></url-pattern>
   </servlet-mapping>
   <filter>
     <filter-name>LogFilter</filter-name>

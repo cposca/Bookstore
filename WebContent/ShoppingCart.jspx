@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:f="http://java.sun.com/jsp/jstl/fmt" version="2.0">
 	<jsp:directive.page contentType="text/html; charset=ISO-8859-1"
 		pageEncoding="ISO-8859-1" session="true" />
 	<jsp:output doctype-root-element="html"
@@ -14,25 +15,25 @@
 <body>
 	<section id="banner"></section>
 	<section id="shoppingCart">
-		<form action="" method="post" onsubmit="return validate();">
-			<FIELDSET>
-				<TABLE>
-					<TR>
-						<TH>Item Number</TH>
-						<TH>Item ISBN</TH>
-						<TH>Item quantity</TH>
-						<TH>Unit price</TH>
-						<TH>Total</TH>
-					</TR>
-					<c:choose>
-						<c:when test="${requestScope['cartItems'] ne null}">
-							<c:set var="number" value="1" />
-							<c:forEach items="${requestScope['shoppingList']}" var="key">
+		<form action="ShoppingCart" method="post">
+
+			<c:choose>
+				<c:when test="${shoppingList ne null}">
+					<c:set var="number" value="1" />
+					<FIELDSET>
+						<TABLE>
+							<TR>
+								<TH>Item Number</TH>
+								<TH>Item ISBN</TH>
+								<TH>Item quantity</TH>
+								<TH>Unit price</TH>
+								<TH>Total</TH>
+							</TR>
+							<c:forEach items="${shoppingList}" var="key">
 								<TR>
 									<TD><c:out value="${number}"></c:out></TD>
 									<TD><c:out value="${key.isbn}"></c:out></TD>
-									<TD><INPUT type="number" value="${key.quantity}" step="1"
-										name="${key.isbn}"></INPUT></TD>
+									<TD><INPUT type="number" value="${key.quantity}" step="1" name="${key.isbn}"></INPUT></TD>
 									<TD><c:out value="${key.price}"></c:out></TD>
 									<TD><c:out value="${key.price*key.quantity}"></c:out></TD>
 								</TR>
@@ -42,14 +43,14 @@
 								<TD></TD>
 								<TD></TD>
 								<TD>set quantity to zero to delete item<BR />
-								<BUTTON type="submit" name="update">update units</BUTTON></TD>
+									<BUTTON type="submit" name="update" value="true">update units</BUTTON></TD>
 								<TD></TD>
 								<TD></TD>
 							</TR>
 							<TR>
 								<TD></TD>
 								<TD></TD>
-								<TD><BUTTON type="submit" name="update">update units</BUTTON></TD>
+								<TD></TD>
 								<TD>sub-total:</TD>
 								<TD><c:out value="${ subTotal }"></c:out></TD>
 							</TR>
@@ -67,13 +68,14 @@
 								<TD>Total:</TD>
 								<TD><c:out value="${ subTotal * 1.13 }"></c:out></TD>
 							</TR>
-						</c:when>
-						<c:otherwise>
-							<c:out value="The cart is empty"></c:out>
-						</c:otherwise>
-					</c:choose>
-				</TABLE>
-			</FIELDSET>
+						</TABLE>
+					</FIELDSET>
+				</c:when>
+				<c:otherwise>
+					<c:out value="The cart is empty"></c:out>
+				</c:otherwise>
+			</c:choose>
+			<BUTTON type="submit" >Checkout</BUTTON>
 		</form>
 	</section>
 	<section id="footer"></section>
