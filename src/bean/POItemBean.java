@@ -1,10 +1,21 @@
 package bean;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "POItem")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class POItemBean {
 
+	@XmlElement 
 	private int id;
+	@XmlElement 
 	private String isbn;
+	@XmlElement 
 	private int price;
+	@XmlElement 
 	private int quantity;
 
 	public POItemBean(int id, String isbn, int price, int quantity) {
