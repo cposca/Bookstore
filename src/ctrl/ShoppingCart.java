@@ -52,7 +52,6 @@ public class ShoppingCart extends HttpServlet {
 			throws ServletException, IOException {
 		if (request.getParameter("update") != null) {
 			shoppingCart = (ShoppingCartModel) request.getSession().getAttribute("shoppingCartModel");
-
 			Map<String, String[]> parametersMap = request.getParameterMap();
 			shoppingCart.updateCart(parametersMap);
 			setShoppingAttributes(request);
@@ -67,6 +66,7 @@ public class ShoppingCart extends HttpServlet {
 				shoppingCart = new ShoppingCartModel();
 			}
 			String isbn = request.getParameter("isbn");
+
 			// StoreModel storeModel = (StoreModel)
 			// request.getServletContext().getAttribute("storeModel");
 			StoreModel storeModel = new StoreModel();

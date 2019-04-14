@@ -24,21 +24,20 @@ public class Start extends HttpServlet {
 	}
 
 	public void init() throws ServletException {
-		// ServletContext context = getServletContext();
-//		try {
-////			storeObj = new StoreModel();
-////			context.setAttribute("storeModel", storeObj);
-//		} catch (ClassNotFoundException e) {
-//			// TODO make an exception
-//			e.printStackTrace();
-//		}
+		ServletContext context = getServletContext();
+		try {
+			storeObj = new StoreModel();
+			context.setAttribute("storeModel", storeObj);
+		} catch (ClassNotFoundException e) {
+			// TODO make an exception
+			e.printStackTrace();
+		}
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		try {
-			StoreModel storeModel = new StoreModel();
 			String pathInfo = request.getPathInfo();
 
 			if (pathInfo != null && pathInfo.equalsIgnoreCase("/book")) {

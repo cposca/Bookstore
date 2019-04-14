@@ -34,6 +34,14 @@ public class StoreModel {
 		return dao.getBook(bid);
 	}
 
+	public List<BookBean> retrieveBooks() throws Exception {
+		return bookDao.retrieveBooks();
+	}
+	
+	public BookBean getBookDetails(String isbn) {
+		return storeBooks.get(isbn);
+  }
+  
 	public List<BookBean> retrieveBooks(String category, String search) throws Exception {
 		BookDAO dao = new BookDAO();
 		return dao.retrieveBooks(category, search);
