@@ -19,6 +19,8 @@
 		<button type="submit">search</button>
 	</form>
 	<BR />
+	<a href="ShoppingCart">Shopping Cart</a>
+	<BR />
 	<a href="Store">Home</a>
 
 	<BR />
@@ -35,20 +37,30 @@
 			<TH>Category</TH>
 			<TH>Price</TH>
 			<TH>Title</TH>
-			<TH>bid</TH>
+			<TH></TH>
+
 		</TR>
 		<c:forEach items="${requestScope['books']}" var="book">
 			<TR>
 				<TD><c:out value="${book.getCategory()}" /></TD>
 				<TD><c:out value="${book.getPrice()}" /></TD>
-				<TD><c:out value="${book.getTitle()}" /></TD>
-				<TD><c:out value="${book.getIsbn()}" /></TD>
+				<TD><a href="Store/book?bid=${book.getIsbn()}"><c:out
+							value="${book.getTitle()}" /></a></TD>
+				<TD>
+					<FORM
+						action="ShoppingCart?addToCart=true&amp;isbn=${book.getIsbn()}"
+						method="post">
+						<INPUT type="submit" value="Add to Shopping Cart" />
+					</FORM>
+				</TD>
+
 			</TR>
 		</c:forEach>
 	</TABLE>
 	<BR />
 	<FORM>
-		<button action='submit' name='shop' label='shop'>Shopping Cart</button></FORM>
+		<button action='submit' name='shop' label='shop'>Shopping Cart</button>
+	</FORM>
 </body>
 	</html>
 </jsp:root>
