@@ -34,6 +34,12 @@
 	</FORM>
 	<BR />
 	<BR />
+	<FORM action="../ShoppingCart?addToCart=true&amp;isbn=${book.getIsbn()}"
+		method="post">
+		<INPUT type="submit" value="Add to Shopping Cart" />
+	</FORM>
+	<BR />
+	<BR />
 	<c:if test="${!requestScope['reviews'].isEmpty()}">
 		<TABLE border="1">
 			<TR>
