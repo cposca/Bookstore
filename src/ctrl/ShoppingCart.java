@@ -34,7 +34,7 @@ public class ShoppingCart extends HttpServlet {
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {
-		
+
 	}
 
 	/**
@@ -54,17 +54,15 @@ public class ShoppingCart extends HttpServlet {
 			throws ServletException, IOException {
 		if (request.getParameter("update") != null) {
 			shoppingCart = (ShoppingCartModel) request.getSession().getAttribute("shoppingCartModel");
-			if(shoppingCart != null) {
+			if (shoppingCart != null) {
 				Map<String, String[]> parametersMap = new HashMap<String, String[]>(request.getParameterMap());
-				parametersMap.remove("addToCart");
 				parametersMap.remove("update");
-				parametersMap.remove("isbn");
 				shoppingCart.updateCart(parametersMap);
 				setShoppingAttributes(request);
+				response.sendRedirect("ShoppingCart.jspx");
 			} else {
-				//TODO: Set error 
+				// TODO: Set error
 			}
-			request.getRequestDispatcher("/ShoppingCart.jspx").forward(request, response);
 		} else if (request.getParameter("addToCart") != null) {
 			/**
 			 * when add to cart button is clicked, make a post call to this servlet with
@@ -82,14 +80,14 @@ public class ShoppingCart extends HttpServlet {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				setShoppingAttributes(request);
+				response.sendRedirect("ShoppingCart.jspx");
 			} else {
 				// TODO: Set error message
 			}
-			setShoppingAttributes(request);
-			request.getRequestDispatcher("/ShoppingCart.jspx").forward(request, response);
-		} else {
-			request.getRequestDispatcher("/ShoppingCart.jspx").forward(request, response);
 		}
+		
+
 	}
 
 	private void setShoppingAttributes(HttpServletRequest request) {

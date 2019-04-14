@@ -9,7 +9,6 @@ import dao.BookDAO;
 
 public class StoreModel {
 
-	private Map<String, BookBean> storeBooks;
 	BookDAO dao;
 	
 	public StoreModel() {
