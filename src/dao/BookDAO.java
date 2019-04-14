@@ -1,21 +1,18 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
-
-import javax.sql.DataSource;
 import bean.BookBean;
 import bean.ReviewBean;
 
 public class BookDAO {
 
-	public BookDAO() throws ClassNotFoundException {
+	public BookDAO() {
 
 	}
 
