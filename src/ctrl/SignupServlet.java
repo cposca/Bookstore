@@ -75,8 +75,9 @@ public class SignupServlet extends HttpServlet {
 									SecureRandom random = new SecureRandom();
 									byte[] salt = new byte[64];
 									random.nextBytes(salt);
-									String encryptedPass = hashToString(sha256(password,DatatypeConverter.printBase64Binary(salt)));
-									loginDAO.create(username, encryptedPass, DatatypeConverter.printBase64Binary(salt));
+									String stringSalt = DatatypeConverter.printBase64Binary(salt);
+									String encryptedPass = hashToString(sha256(password,stringSalt));
+									loginDAO.create(username, encryptedPass, stringSalt);
 									list = loginDAO.retrieve(username);
 									LoginBean bean = list.get(0);
 									AddressDAO addDAO = new AddressDAO();

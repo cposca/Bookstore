@@ -19,6 +19,7 @@ import bean.LoginBean;
 import bean.POItemBean;
 import bean.UserBean;
 import dao.AddressDAO;
+import dao.CommerceEventDAO;
 import dao.LoginDAO;
 import dao.UserDAO;
 import model.ShoppingCartModel;
@@ -48,7 +49,6 @@ public class PaymentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String username = (String) request.getSession().getAttribute("username");
-
 		LoginDAO lDao = new LoginDAO();
 
 		boolean pass;
@@ -69,8 +69,8 @@ public class PaymentServlet extends HttpServlet {
 
 			}
 
-			if (request.getParameter("confirm") != null) {
-//&& address != null
+			if (request.getParameter("confirm") != null && address != null) {
+
 				counter++;
 				pass = true;
 
@@ -89,7 +89,13 @@ public class PaymentServlet extends HttpServlet {
 					List<POItemBean> list = shoppingCart.getShoppingList();
 
 					String accept = order.createOrder(user, list, pass);
-
+					//CALL WHEN SUCCEED
+					CommerceEventDAO cDAO = new CommerceEventDAO();
+						try {
+							cDAO.create("0",new Long(System.currentTimeMillis()).toString(), "purchase");
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
 					request.setAttribute("approved", accept);
 				}
 
