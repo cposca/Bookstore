@@ -40,7 +40,7 @@ public class PaymentServlet extends HttpServlet {
 
 	}
 
-	int counter = 0;
+	static int counter = 0;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
