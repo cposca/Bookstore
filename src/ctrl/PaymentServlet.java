@@ -77,7 +77,7 @@ public class PaymentServlet extends HttpServlet {
 				String credit = request.getParameter("credit");
 
 				if (credit == null || credit.length() == 0) {
-					request.setAttribute("error", "Your credit card information cannot be empty!");
+					request.setAttribute("error2", "Your credit card information cannot be empty!");
 				} else {
 
 					if (counter % 3 == 0) {
