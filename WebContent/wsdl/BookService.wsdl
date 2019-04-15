@@ -92,7 +92,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       <wsdl:port binding="impl:BookServiceSoapBinding" name="BookService">
 
-         <wsdlsoap:address location="https://localhost:8/EECS4314_Project/services/BookService"/>
+         <wsdlsoap:address location="http://localhost:8080/EECS4314_Project/services/BookService"/>
 
       </wsdl:port>
 

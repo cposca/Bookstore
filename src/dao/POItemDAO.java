@@ -31,24 +31,30 @@ public class POItemDAO {
 		return rv;
 	}
 	
-	public void create(int id, String isbn, int price, int quantity) throws SQLException {
-		String update = "INSERT INTO POItem (id, isbn, price, quantity) VALUES ('" + id + "', " + isbn + "', " + price + "', " + quantity + "');";
+	public void create(int id, String bid, int price) throws SQLException {
+		String update = "INSERT INTO POItem (id, bid, price) VALUES (?,?,?);";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
+		p.setInt(1, id);
+		p.setString(2, bid);
+		p.setInt(3, price);
 		p.executeUpdate();
 		p.close();
 		con.close();
 	}
 	
-	public void delete(int id, String isbn) throws SQLException {
-		String update = "DELETE FROM POItem WHERE 'id' = '" + id + "' AND bid = '" + isbn + "';";
+	public void delete(int id, String bid) throws SQLException {
+		String update = "DELETE FROM POItem WHERE 'id' = ? AND bid = ?;";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
+		p.setInt(1, id);
+		p.setString(2, bid);
 		p.executeUpdate();
 		p.close();
 		con.close();
 	}
 	
+	/*
 	public void updateQuantity(int id, String isbn, int quantity) throws SQLException {
 		String update = "UPDATE POItem SET 'quantity'='quantity'" + (quantity >= 0? "+" : "-") + quantity + " WHERE 'id' = '" + id + "' AND 'bid' = '" + isbn + "';";
 		Connection con = MySQLConnector.getConnection();
@@ -57,4 +63,5 @@ public class POItemDAO {
 		p.close();
 		con.close();
 	}
+	*/
 }
