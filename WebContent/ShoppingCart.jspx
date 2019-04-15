@@ -38,11 +38,12 @@
 				<c:when test="${shoppingList ne null}">
 					<c:set var="number" value="1" />
 					<FIELDSET>
-						<TABLE border="1">
+						<TABLE>
 							<TR>
 								<TH>Item Number &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;</TH>
 								<TH>Item ISBN &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;</TH>
-								<TH>Item quantity &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;</TH>
+								<TH>Item quantity &amp;nbsp; &amp;nbsp; &amp;nbsp;
+									&amp;nbsp; &amp;nbsp; &amp;nbsp;</TH>
 								<TH>Unit price &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;</TH>
 								<TH>Total</TH>
 							</TR>

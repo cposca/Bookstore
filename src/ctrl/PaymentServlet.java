@@ -69,22 +69,29 @@ public class PaymentServlet extends HttpServlet {
 
 			}
 
-			if (request.getParameter("confirm") != null && address != null) {
+			if (request.getParameter("confirm") != null) {
 //&& address != null
 				counter++;
 				pass = true;
 
-				if (counter % 3 == 0) {
-					pass = false;
+				String credit = request.getParameter("credit");
+
+				if (credit == null || credit.length() == 0) {
+					request.setAttribute("error", "Your credit card information cannot be empty!");
+				} else {
+
+					if (counter % 3 == 0) {
+						pass = false;
+					}
+
+					ShoppingCartModel shoppingCart = (ShoppingCartModel) request.getSession()
+							.getAttribute("shoppingCartModel");
+					List<POItemBean> list = shoppingCart.getShoppingList();
+
+					String accept = order.createOrder(user, list, pass);
+
+					request.setAttribute("approved", accept);
 				}
-
-				ShoppingCartModel shoppingCart = (ShoppingCartModel) request.getSession()
-						.getAttribute("shoppingCartModel");
-				List<POItemBean> list = shoppingCart.getShoppingList();
-
-				String accept = order.createOrder(user, list, pass);
-
-				request.setAttribute("approved", accept);
 
 				request.getRequestDispatcher("/PaymentPage.jspx").forward(request, response);
 
