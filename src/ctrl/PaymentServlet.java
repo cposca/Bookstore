@@ -83,7 +83,7 @@ public class PaymentServlet extends HttpServlet {
 						.getAttribute("shoppingCartModel");
 				List<POItemBean> list = shoppingCart.getShoppingList();
 
-				String accept = order.createOrder();
+				String accept = order.createOrder(user,list,true);
 				// String order = createOrder();
 				// String order = createOrder(user, list, true);
 
