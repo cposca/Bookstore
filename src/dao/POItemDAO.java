@@ -4,10 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import bean.POItemBean;
 
@@ -67,8 +67,8 @@ public class POItemDAO {
 		p.executeUpdate();
 		p.close();
 		con.close();
-	}*/
-
+	}
+*/
 	public Map<String, Integer> retrieveOrderCount() {
 		Map<String, Integer> rv = new HashMap<String, Integer>();
 		try {
@@ -86,5 +86,4 @@ public class POItemDAO {
 		}
 		return rv;
 	}
-
 }

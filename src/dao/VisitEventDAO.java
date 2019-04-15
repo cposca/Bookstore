@@ -82,4 +82,26 @@ public class VisitEventDAO {
 		p.close();
 		con.close();
 	}
+	
+	public void updateTimestamp(String token, String timestamp) throws SQLException {
+		String update = "UPDATE VisitEvent SET 'timestamp'= ? WHERE 'token' = ?;";
+		Connection con = MySQLConnector.getConnection();
+		PreparedStatement p = con.prepareStatement(update);
+		p.setString(1, timestamp);
+		p.setString(2, token);
+		p.executeUpdate();
+		p.close();
+		con.close();
+	}
+	
+	public void updateStatus(String token, String status) throws SQLException {
+		String update = "UPDATE VisitEvent SET 'status'= ? WHERE 'token' = ?;";
+		Connection con = MySQLConnector.getConnection();
+		PreparedStatement p = con.prepareStatement(update);
+		p.setString(1, status);
+		p.setString(2, token);
+		p.executeUpdate();
+		p.close();
+		con.close();
+	}
 }

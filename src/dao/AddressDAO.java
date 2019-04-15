@@ -28,7 +28,7 @@ public class AddressDAO {
 	 * @throws SQLException
 	 */
 	public List<AddressBean> retrieve(int id) throws SQLException {
-		String query = "select * from book where id = '?'";
+		String query = "select * from address where id = ?";
 		List<AddressBean> rv = new ArrayList<AddressBean>();
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
