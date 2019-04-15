@@ -17,6 +17,15 @@
 	crossorigin="anonymous" />
 </head>
 <body>
+	<c:choose>
+		<c:when test="${sessionScope['username'] == null}">
+			<a href="Login">Login</a>
+		</c:when>
+		<c:otherwise>
+
+			<h4>Welcome ${sessionScope['username']}</h4>
+		</c:otherwise>
+	</c:choose>
 	<section id="banner"></section>
 	<section id="shoppingCart">
 		<form action="ShoppingCart" method="post">
@@ -37,7 +46,8 @@
 								<TR>
 									<TD><c:out value="${number}"></c:out></TD>
 									<TD><c:out value="${key.isbn}"></c:out></TD>
-									<TD><INPUT type="number" value="${key.quantity}" step="1" name="${key.isbn}"></INPUT></TD>
+									<TD><INPUT type="number" value="${key.quantity}" step="1"
+										name="${key.isbn}"></INPUT></TD>
 									<TD><c:out value="${key.price}"></c:out></TD>
 									<TD><c:out value="${key.price*key.quantity}"></c:out></TD>
 								</TR>
@@ -47,7 +57,8 @@
 								<TD></TD>
 								<TD></TD>
 								<TD>set quantity to zero to delete item<BR />
-									<BUTTON type="submit" name="update" value="true">update units</BUTTON></TD>
+									<BUTTON type="submit" name="update" value="true">update
+										units</BUTTON></TD>
 								<TD></TD>
 								<TD></TD>
 							</TR>
@@ -79,8 +90,9 @@
 					<c:out value="The cart is empty"></c:out>
 				</c:otherwise>
 			</c:choose>
-			<BUTTON type="submit" >Checkout</BUTTON>
-			<a href="Store">Home</a>
+
+			<a href="Payment" class="btn btn-primary">Checkout</a> <a
+				href="Store">Home</a>
 		</form>
 	</section>
 	<section id="footer"></section>

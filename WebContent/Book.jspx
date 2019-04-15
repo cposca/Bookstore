@@ -17,7 +17,15 @@
 </head>
 <body>
 	<a href="../Store">Home</a>&amp;nbsp;
-	<a href="../Login">Login</a>
+	<c:choose>
+		<c:when test="${sessionScope['username'] == null}">
+			<a href="../Login">Login</a>
+		</c:when>
+		<c:otherwise>
+
+			<h4>Welcome ${sessionScope['username']}</h4>
+		</c:otherwise>
+	</c:choose>
 	<BR />
 	<h1>Book: ${book.getTitle()}</h1>
 	<b>${book.getCategory()}</b>
