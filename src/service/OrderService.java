@@ -54,8 +54,48 @@ public class OrderService extends Service{
 	}
 	
 	@GET
-	@Path("/get/")
+	@Path("/getJson/")
 	@Produces(MediaType.TEXT_XML)
+	public String getOrdersByPartNumberJSON(@DefaultValue("0") @QueryParam("partNumber") int partNumber) throws SQLException, JAXBException, SAXException, IOException {
+		String output = "{\n";
+		List<POItemBean> orders = null;
+		if (!daoAvailable) {
+			if (!InstantiateDAO()) {
+				return output;
+			}
+		} else {
+			orders = orderItemInformation.retrieve(partNumber);
+			AddressBean bean = addressInformation.retrieve(partNumber).get(0);
+			output += "\"Purchase Order\": {\n";
+			if (bean != null) {
+				output += "\t\"Ship To\": {\n";
+				output += "\t\t\"Street\": " + bean.getStreet() + ",\n";
+				output += "\t\t\"Province\": " + bean.getProvince() + ",\n";
+				output += "\t\t\"Zip\": " + bean.getZip() + ",\n";
+				output += "\t\t\"Country\": " + bean.getCountry() + ",\n";
+				output += "\t\t\"Street\": " + bean.getPhone() + "\n";
+				output += "\t}\n";
+			}
+			if (orders.size() > 0) {
+				output += "\t\"Items\": [\n";
+				for (int i = 0 ; i < orders.size(); i++) {
+					output += "\t\t{\n";
+					output += "\t\t\t\"Product Name\": " + orders.get(i).getBid() + ",\n";
+					output += "\t\t\t\"Price:\" " + orders.get(i).getPrice() + ",\n";
+					output += "\t\t\t\"Part Number:\" " + orders.get(i).getId() + "\n";
+					output += "\t\t}\n";
+				}
+				output += "\t]\n";
+			}
+		}
+		output += "}";
+		System.out.println(output);
+		return output;
+	}
+	
+	@GET
+	@Path("/get/")
+	@Produces(MediaType.APPLICATION_XML)
 	public String getOrdersByPartNumber(@DefaultValue("0") @QueryParam("partNumber") int partNumber) throws SQLException, JAXBException, SAXException, IOException {
 		String output = "";
 		List<POItemBean> orders = null;
