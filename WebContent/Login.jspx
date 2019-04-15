@@ -21,9 +21,9 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 		<legend>Login</legend>
 		<tr>
 			<c:choose>
-				<c:when test="${empty sessionScope['error']} }">
+				<c:when test="${empty sessionScope['error']}">
 				</c:when>
-				<c:when test="${!empty sessionScope['error']} }">
+				<c:when test="${!empty sessionScope['error']}">
 					<h1>${sessionScope['error']}</h1><br/>
 				</c:when>
 			</c:choose>
@@ -39,7 +39,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 			<br/><td>
 				<input name="password" type="password" value="${sessionScope['minCreditTaken']}"/>
 			</td>
-			<br/><button action='submit' name='signup' >Sign Up</button>
+			<br/><button action='submit' name='signup'> Sign Up</button>
 			<button action='submit' name='login' >Login</button>
 			<br/>
 			<a href="Store">Home</a>
