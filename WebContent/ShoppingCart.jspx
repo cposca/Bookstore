@@ -72,7 +72,7 @@
 								<TD></TD>
 								<TD></TD>
 								<TD></TD>
-								<TD>sub-total:</TD>
+								<TD>Sub-total:</TD>
 								<TD><f:formatNumber type="currency">${subTotal}</f:formatNumber></TD>
 							</TR>
 							<TR>
