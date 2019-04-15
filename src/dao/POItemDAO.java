@@ -23,7 +23,7 @@ public class POItemDAO {
 			int i = r.getInt("ID");
 			String isbn = r.getString("BID");
 			int price = r.getInt("PRICE");
-			rv.add(new POItemBean(i,isbn,price));
+			rv.add(new POItemBean(i,isbn,price, 1));
 		}
 		r.close();
 		p.close();
@@ -41,7 +41,7 @@ public class POItemDAO {
 	}
 	
 	public void delete(int id, String isbn) throws SQLException {
-		String update = "DELETE FROM POItem WHERE 'id' = '" + id + "' AND isbn = '" + isbn + "';";
+		String update = "DELETE FROM POItem WHERE 'id' = '" + id + "' AND bid = '" + isbn + "';";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
 		p.executeUpdate();
@@ -50,7 +50,7 @@ public class POItemDAO {
 	}
 	
 	public void updateQuantity(int id, String isbn, int quantity) throws SQLException {
-		String update = "UPDATE POItem SET 'quantity'='quantity'" + (quantity >= 0? "+" : "-") + quantity + " WHERE 'id' = '" + id + "' AND 'isbn' = '" + isbn + "';";
+		String update = "UPDATE POItem SET 'quantity'='quantity'" + (quantity >= 0? "+" : "-") + quantity + " WHERE 'id' = '" + id + "' AND 'bid' = '" + isbn + "';";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
 		p.executeUpdate();

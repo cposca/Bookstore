@@ -15,15 +15,17 @@ public class POItemBean {
 	private String bid;
 	@XmlElement 
 	private int price;
+	private int quantity;
 
 	public POItemBean() {
 		this.bid = null;
 	}
 	
-	public POItemBean(int id, String bid, int price) {
+	public POItemBean(int id, String bid, int price, int quantity) {
 		this.id = id;
 		this.bid = bid;
 		this.price = price;
+		this.quantity = quantity;
 	}
 
 	public int getId() {
@@ -48,6 +50,14 @@ public class POItemBean {
 
 	public void setPrice(int price) {
 		this.price = price;
+	}
+	
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 }

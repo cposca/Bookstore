@@ -16,7 +16,7 @@ public class StoreModel {
 	}
 
 	public BookBean getBookDetails(String bid) throws Exception {
-		return dao.getBook(bid);
+		return dao.getBook(bid).get(0);
 	}
 
 	public List<BookBean> retrieveBooks(String category, String search) throws Exception {

@@ -25,7 +25,6 @@ public class OrderService extends Service{
 		return daoAvailable;
 	}
 	
-	//TODO: Fix once the DAO is working
 	@GET
 	@Path("/get/")
 	@Produces(MediaType.APPLICATION_XML)
@@ -40,6 +39,14 @@ public class OrderService extends Service{
 		}
 		
 		return orders;
+	}
+	
+	@GET
+	@Path("/create/")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String createOrder() {
+		
+		return "fail";
 	}
 	
 }
