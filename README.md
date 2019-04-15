@@ -38,7 +38,11 @@
                keystorePass="unicorns" scheme="https" secure="true" sslProtocol="TLS">
     </Connector>
 ```
-5. SSL should not be enable on the server
+5. SSL should now be enable on the server
+6. Locate the WebContent/WEB-INF/web.xml file
+7. Locate line 73 in the XML file: ```<transport-guarantee>CONFIDENTIAL</transport-guarantee>```
+   * The line may also be reperesented by ```<transport-guarantee>NONE</transport-guarantee>```
+8. If the line contains the key word *CONFIDENTIAL* then leave it alone. If the line contains *NONE* then replace it with *CONFIDENTIAL*
 
 **Running Test Cases:**
 
