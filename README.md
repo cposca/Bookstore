@@ -1,4 +1,15 @@
 # Bookstore
+**Installation:**
+
+1. Clone/Download the project from the master branch or import the provided war file
+2. Open the project in eclipse and connect to a MySQL server
+3. Populate the database with the provided SQL file (*Bookstore.sql*)
+4. Configure the server settings in *dao.MySQLConnector.java* (Set your username and password as well as the database name)
+5. Project -> Clean the project
+6. Run as -> Maven build... -> Goals: clean install -> Run
+7. Run *ctrl.Start.java* on the server
+8. Access the webapp at **http://localhost:8080/EECS4314_Project/Store**
+    * Alternatively use **https://localhost:8443/EECS4314_Project/Store** if you have set up SSL
 
 **To set up SSL on the server:**
 
@@ -29,15 +40,8 @@
 ```
 5. SSL should not be enable on the server
 
-**Installation:**
-
-1. Clone/Download the project from the master branch or import the provided war file
-2. Open the project in eclipse and connect to a MySQL server
-3. Populate the database with the provided SQL file 
-4. Configure the server settings in dao.MySQLConnector.java
-5. Run ctrl.Start.java on the server
-
 **Running Test Cases:**
+
 Because of the absence of a real certificate, we are unable to test our services using clients without turning off SSL. To do this quickly and easily follow these steps:
 
 1. Navigate to the web.xml file in WebContent/WEB-INF
