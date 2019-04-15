@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package dao;
 
 import java.sql.Connection;
@@ -86,5 +87,4 @@ public class POItemDAO {
 		}
 		return rv;
 	}
-
 }

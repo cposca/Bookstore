@@ -34,7 +34,6 @@
 	<section id="banner"></section>
 	<section id="shoppingCart">
 		<form action="ShoppingCart" method="post">
-
 			<c:choose>
 				<c:when test="${shoppingList ne null}">
 					<c:set var="number" value="1" />

@@ -1,12 +1,21 @@
 package bean;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlType(name="Address", propOrder= {"street","province","zip","country","phone"})
 public class AddressBean {
 
 	private int id;
+	@XmlElement
 	private String street;
+	@XmlElement
 	private String province;
+	@XmlElement
 	private String country;
+	@XmlElement
 	private String zip;
+	@XmlElement
 	private String phone;
 	
 	public AddressBean(int id, String street, String province, String country, String zip, String phone) {
