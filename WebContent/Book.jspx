@@ -10,9 +10,14 @@
 	<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Book Store Main Page</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous" />
 </head>
 <body>
-	<a href="../Store">Home</a>
+	<a href="../Store">Home</a>&amp;nbsp;
+	<a href="../Login">Login</a>
 	<BR />
 	<h1>Book: ${book.getTitle()}</h1>
 	<b>${book.getCategory()}</b>
@@ -22,11 +27,10 @@
 
 	<BR />
 
-	<a href="../Login">Login</a>
-		<BR />
+
 
 	<FORM method="post">
-		<H2>Add Review</H2>
+		<H2>Add a Review</H2>
 		<label>Name: </label> <input type="text" name="name" /> <br />
 		<TEXTAREA rows="3" cols="100" name="review"
 			placeholder="Enter your review">Enter your review
@@ -37,7 +41,8 @@
 	</FORM>
 	<BR />
 	<BR />
-	<FORM action="../ShoppingCart?addToCart=true&amp;isbn=${book.getIsbn()}"
+	<FORM
+		action="../ShoppingCart?addToCart=true&amp;isbn=${book.getIsbn()}"
 		method="post">
 		<INPUT type="submit" value="Add to Shopping Cart" />
 	</FORM>

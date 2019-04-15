@@ -10,6 +10,11 @@
 	<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Book Store Main Page</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous" />
+
 </head>
 <body>
 	<h1>Book Store</h1>
@@ -23,7 +28,7 @@
 
 	<form action="Store" method="GET">
 		<input type="text" name="search" />
-		<button type="submit">search</button>
+		<button class="btn btn-primary" type="submit">Search</button>
 	</form>
 
 
@@ -39,7 +44,7 @@
 
 	</c:forEach>
 	<BR />
-	<TABLE border="1">
+	<TABLE border="1" class="table">
 		<TR>
 			<TH>Category</TH>
 			<TH>Price</TH>
@@ -57,7 +62,8 @@
 					<FORM
 						action="ShoppingCart?addToCart=true&amp;isbn=${book.getIsbn()}"
 						method="post">
-						<INPUT type="submit" value="Add to Shopping Cart" />
+						<button class="btn btn-primary" type="submit">Add to
+							Shopping Cart</button>
 					</FORM>
 				</TD>
 

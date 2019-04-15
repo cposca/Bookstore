@@ -10,7 +10,11 @@
 		omit-xml-declaration="true" />
 	<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Insert title here</title>
+<title>Shopping Cart</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous" />
 </head>
 <body>
 	<section id="banner"></section>
@@ -76,6 +80,7 @@
 				</c:otherwise>
 			</c:choose>
 			<BUTTON type="submit" >Checkout</BUTTON>
+			<a href="Store">Home</a>
 		</form>
 	</section>
 	<section id="footer"></section>
