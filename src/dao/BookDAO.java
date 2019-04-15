@@ -35,7 +35,7 @@ public class BookDAO {
 			if (category != null) {
 				statement.setString(1, category);
 			} else if (search != null) {
-				statement.setString(1, "%" + search + "%");
+				statement.setString(0, "%" + search + "%");
 			}
 			rs = statement.executeQuery();
 			bookBean = new ArrayList<BookBean>();

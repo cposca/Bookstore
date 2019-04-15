@@ -18,7 +18,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 </head>
 <body>
 <h1>Success! Click below to main page.</h1>
-<br/><button action='submit' name='success' >Finish</button>
+<a href="Store">Home</a>
 </body>
 </html>
 </jsp:root>

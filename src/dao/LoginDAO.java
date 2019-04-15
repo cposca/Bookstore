@@ -15,18 +15,22 @@ public class LoginDAO {
 	}
 	
 	public void create(String username, String password, String salt) throws SQLException {
-		String update = "INSERT INTO Login (username, password, salt) VALUES ('" + username + "', " + password + "', " + salt + "');";
+		String update = "INSERT INTO Login (username, password, salt) VALUES (?,?,?);";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
+		p.setString(1, username);
+		p.setString(2, password);
+		p.setString(3, salt);
 		p.executeUpdate();
 		p.close();
 		con.close();
 	}
 	
 	public List<LoginBean> retrieve(String username) throws SQLException{
-		String query = "select * from Login where username = " + username;
+		String query = "select * from Login where username = ?";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
+		p.setString(1, username);
 		ResultSet r = p.executeQuery();
 		List<LoginBean> rv = new ArrayList<LoginBean>();
 		while(r.next()) {
