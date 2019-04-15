@@ -3,7 +3,7 @@
 
 1. Clone/Download the project from the master branch or import the provided war file
 2. Open the project in eclipse and connect to a MySQL server
-3. Populate the database with the provided SQL file (*Bookstore.sql*)
+3. Populate the database with the provided SQL file (*bookstoreStrawHatUnicorns.sql*)
 4. Configure the server settings in *dao.MySQLConnector.java* (Set your username and password as well as the database name)
 5. Project -> Clean the project
 6. Run as -> Maven build... -> Goals: clean install -> Run
