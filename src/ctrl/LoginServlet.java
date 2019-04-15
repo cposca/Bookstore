@@ -2,6 +2,7 @@ package ctrl;
 
 import java.io.IOException;
 import java.security.MessageDigest;
+import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.DatatypeConverter;
 
 import bean.LoginBean;
 import dao.LoginDAO;
@@ -21,8 +23,10 @@ import dao.VisitEventDAO;
 @WebServlet(urlPatterns = { "/Login", "/Login/*" })
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private String signupPage = "/Signup.jspx";
+	private String signupServlet = "Signup";
 	private String loginPage = "/Login.jspx";	
+	private String mainServlet = "Store";
+	private String successPage = "/Success.jspx";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -43,8 +47,12 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(!(request.getParameter("signup") == null)) {
-			request.getRequestDispatcher(signupPage).forward(request,response);
+		request.getSession().removeAttribute("error");
+		if(!(request.getParameter("success") == null)) {
+			response.sendRedirect(mainServlet);
+		}
+		else if(!(request.getParameter("signup") == null)) {
+			response.sendRedirect(signupServlet);
 		}else if(!(request.getParameter("login") == null)) {
 			try {
 				LoginDAO l = new LoginDAO();
@@ -55,19 +63,22 @@ public class LoginServlet extends HttpServlet {
 				}else {
 					LoginBean bean = query.get(0);
 					String salt = bean.getSalt();
-					if(sha256(username+salt) == bean.getPassword()) {
+					if(bytesToString(sha256(username,salt)).equals(bean.getPassword())) {
 						VisitEventDAO visitDAO = new VisitEventDAO();
 						String timestamp = (new Long(System.currentTimeMillis())).toString();
 						String status = "active";
-						String token = sha256(username+timestamp+status);
+						SecureRandom random = new SecureRandom();
+						byte[] salt2 = new byte[64];
+						random.nextBytes(salt2);
+						String token = bytesToString(sha256(username,DatatypeConverter.printBase64Binary(salt2)));
 						visitDAO.create(username, timestamp, status, token);
 						request.getSession().setAttribute("sessionToken", token);
 						request.getSession().setAttribute("username",username);
+						request.getRequestDispatcher(successPage).forward(request,response);
 					}else {
 						request.getSession().setAttribute("error", "Incorrect Password!");
 					}
 				}
-				//TODO
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -77,21 +88,27 @@ public class LoginServlet extends HttpServlet {
 		}
 	}
 
-	private static String sha256(String base) {
+	private static byte[] sha256(String base, String salt) {
 	    try{
 	        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-	        byte[] hash = digest.digest(base.getBytes("UTF-8"));
-	        StringBuffer hexString = new StringBuffer();
-
-	        for (int i = 0; i < hash.length; i++) {
-	            String hex = Integer.toHexString(0xff & hash[i]);
-	            if(hex.length() == 1) hexString.append('0');
-	            hexString.append(hex);
-	        }
-
-	        return hexString.toString();
+	        digest.update(base.getBytes("UTF-8"));
+	        digest.update(salt.getBytes("UTF-8"));
+	        return digest.digest();
 	    } catch(Exception ex){
 	       throw new RuntimeException(ex);
 	    }
 	}
+	
+	private String bytesToString(byte[] b) {
+		StringBuffer hexString = new StringBuffer();
+
+        for (int i = 0; i < b.length; i++) {
+            String hex = Integer.toHexString(0xff & b[i]);
+            if(hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+
+        return hexString.toString();
+	}
+	
 }

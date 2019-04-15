@@ -37,7 +37,7 @@ public class BookDAO {
 			if (category != null) {
 				statement.setString(1, category);
 			} else if (search != null) {
-				statement.setString(1, "%" + search + "%");
+				statement.setString(0, "%" + search + "%");
 			}
 			rs = statement.executeQuery();
 			bookBean = new ArrayList<BookBean>();
@@ -116,14 +116,12 @@ public class BookDAO {
 		ResultSet rs = null;
 		BookBean book = null;
 		String query = "select * from book WHERE bid = ?";
-
 		try {
 
 			connection = MySQLConnector.getConnection();
 			statement = connection.prepareStatement(query);
 			statement.setString(1, bid);
 			rs = statement.executeQuery();
-
 			while (rs.next()) {
 
 				String isbn = rs.getString("BID");
@@ -131,7 +129,6 @@ public class BookDAO {
 				String cat = rs.getString("CATEGORY");
 				int price = rs.getInt("PRICE");
 				book = new BookBean(isbn, title, cat, price);
-
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -10,7 +10,10 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>%TODO%%%%%%%%%%%%%%%%%%%%%</title>
-<link rel="StyleSheet" href="res/mc.css" type="text/css" media="screen, print"/>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous" />
 <script type="text/javascript" src="res/signup.js">;</script>
 </head>
 <body>
@@ -19,9 +22,9 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 		<legend>Signup</legend>
 		<tr>
 			<c:choose>
-				<c:when test="${empty sessionScope['error']} }">
+				<c:when test="${empty sessionScope['error']}">
 				</c:when>
-				<c:when test="${!empty sessionScope['error']} }">
+				<c:when test="${!empty sessionScope['error']}">
 					<h1>${sessionScope['error']}</h1><br/>
 				</c:when>
 			</c:choose>
@@ -29,7 +32,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 				<label>Username:</label>
 			</td><br/>
 			<td>
-				<input name="username" type="text" value="${sessionScope['username']}"></input>
+				<input name="username" type="text"></input>
 			</td><br/>
 			<td>
 				<label>Password:</label>
@@ -44,12 +47,24 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 				<input name="repeatPassword" type="password"></input>
 			</td><br/>
 			<td>
+				<label>First Name:</label>
+			</td><br/>
+			<td>
+				<input name="fName" type="text"></input>
+			</td><br/>
+			<td>
+				<label>Last Name:</label>
+			</td><br/>
+			<td>
+				<input name="lname" type="text"></input>
+			</td><br/>
+			<td>
 				<label>Street:</label>
 			</td><br/>
 			<td>
-				<input name="Street Name and Number" type="text" value="${sessionScope['street']}"></input>
+				<input name="street" type="text"></input>
 			</td><br/>
-						<td>
+			<td>
 				<label>Country:</label>
 			</td><br/>
 			<td>
@@ -81,14 +96,15 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 				<label>Zip Code:</label>
 			</td><br/>
 			<td>
-				<input name="zip" type="text" value="${sessionScope['zip']}"></input>
+				<input name="zip" type="text"></input>
 			</td><br/>
 			<td>
 				<label>Phone Number:</label>
 			</td><br/>
 			<td>
-				<input name="phone" type="text" value="${sessionScope['phone']}"></input>
+				<input name="phone" type="text"></input>
 			</td><br/><button action='submit' name='signup' >Sign Up</button>
+			<a href="Store">Home</a>
 		</tr>
 	</fieldset>
 </form>

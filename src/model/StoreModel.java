@@ -11,9 +11,9 @@ import dao.POItemDAO;
 
 public class StoreModel {
 
-	BookDAO bookDao;
+  BookDAO bookDao;
 	POItemDAO purchaseOrderDao;
-	
+
 	public StoreModel() {
 		this.bookDao = new BookDAO();
 		this.purchaseOrderDao = new POItemDAO();

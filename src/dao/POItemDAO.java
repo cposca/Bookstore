@@ -17,46 +17,51 @@ public class POItemDAO {
 	}
 
 	public List<POItemBean> retrieve(int id) throws SQLException {
-		String query = "select * from POItem where id = " + id;
+		String query = "select * from POItem where id = ?";
 		List<POItemBean> rv = new ArrayList<POItemBean>();
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
+    p.setInt(1, id);
 		ResultSet r = p.executeQuery();
 		while (r.next()) {
 			int i = r.getInt("ID");
-			String isbn = r.getString("ISBN");
+			String isbn = r.getString("BID");
 			int price = r.getInt("PRICE");
-			int quantity = r.getInt("QUANTITY");
-			rv.add(new POItemBean(i, isbn, price, quantity));
+			rv.add(new POItemBean(i,isbn,price, 1));
 		}
 		r.close();
 		p.close();
 		con.close();
 		return rv;
 	}
-
-	public void create(int id, String isbn, int price, int quantity) throws SQLException {
-		String update = "INSERT INTO POItem (id, isbn, price, quantity) VALUES ('" + id + "', " + isbn + "', " + price
-				+ "', " + quantity + "');";
+	
+	public void create(int id, String bid, int price) throws SQLException {
+		String update = "INSERT INTO POItem (id, bid, price) VALUES (?,?,?);";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
+		p.setInt(1, id);
+		p.setString(2, bid);
+		p.setInt(3, price);
+		p.executeUpdate();
+		p.close();
+		con.close();
+	}
+	
+	public void delete(int id, String bid) throws SQLException {
+		String update = "DELETE FROM POItem WHERE 'id' = ? AND bid = ?;";
+		Connection con = MySQLConnector.getConnection();
+		PreparedStatement p = con.prepareStatement(update);
+		p.setInt(1, id);
+		p.setString(2, bid);
 		p.executeUpdate();
 		p.close();
 		con.close();
 	}
 
-	public void delete(int id, String isbn) throws SQLException {
-		String update = "DELETE FROM POItem WHERE 'id' = '" + id + "' AND isbn = '" + isbn + "';";
-		Connection con = MySQLConnector.getConnection();
-		PreparedStatement p = con.prepareStatement(update);
-		p.executeUpdate();
-		p.close();
-		con.close();
-	}
-
+	
+	/*
 	public void updateQuantity(int id, String isbn, int quantity) throws SQLException {
-		String update = "UPDATE POItem SET 'quantity'='quantity'" + (quantity >= 0 ? "+" : "-") + quantity
-				+ " WHERE 'id' = '" + id + "' AND 'isbn' = '" + isbn + "';";
+		String update = "UPDATE POItem SET 'quantity'='quantity'" + (quantity >= 0? "+" : "-") + quantity + " WHERE 'id' = '" + id + "' AND 'bid' = '" + isbn + "';";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
 		p.executeUpdate();
@@ -81,4 +86,5 @@ public class POItemDAO {
 		}
 		return rv;
 	}
+*/
 }

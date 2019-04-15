@@ -86,7 +86,6 @@ public class ShoppingCart extends HttpServlet {
 				// TODO: Set error message
 			}
 		}
-		
 
 	}
 

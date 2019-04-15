@@ -6,13 +6,22 @@ import java.util.List;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
+import bean.LoginBean;
 import bean.POItemBean;
+import bean.UserBean;
+import dao.AddressDAO;
+import dao.PODAO;
 import dao.POItemDAO;
+import dao.UserDAO;
 
 @Path("POService")
 public class OrderService extends Service{
 
-	POItemDAO orderInformation;
+	POItemDAO orderItemInformation;
+	PODAO orderInformation;
+	UserDAO userInformation;
+	AddressDAO addressInformation;
+	
 	protected boolean daoAvailable = true;
 
 	public OrderService() {
@@ -21,11 +30,13 @@ public class OrderService extends Service{
 	
 	@Override
 	protected boolean InstantiateDAO() {
-		orderInformation = new POItemDAO();
+		orderItemInformation = new POItemDAO();
+		orderInformation = new PODAO();
+		userInformation = new UserDAO();
+		addressInformation = new AddressDAO();
 		return daoAvailable;
 	}
 	
-	//TODO: Fix once the DAO is working
 	@GET
 	@Path("/get/")
 	@Produces(MediaType.APPLICATION_XML)
@@ -36,10 +47,28 @@ public class OrderService extends Service{
 				return orders;
 			}
 		} else {
-			orders = orderInformation.retrieve(partNumber);
+			orders = orderItemInformation.retrieve(partNumber);
 		}
 		
 		return orders;
+	}
+	
+	@GET
+	@Path("/create/")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String createOrder(LoginBean login, List<POItemBean> shoppingCart, boolean orderStatus) throws SQLException {
+		UserBean user = userInformation.retrieveById(login.getId()).get(0);
+		int count = orderInformation.countOrders();
+		if (user == null) {
+			return "fail";
+		}
+		orderInformation.create(count + 1, user.getLname(), user.getFname(), "ORDERED", user.getId());
+		for (int i = 0; i < shoppingCart.size(); i++) {
+			POItemBean book = shoppingCart.get(i);
+			orderItemInformation.create(count + 1, book.getBid(), book.getPrice());
+		}
+		
+		return "success";
 	}
 	
 }

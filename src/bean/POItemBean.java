@@ -12,15 +12,18 @@ public class POItemBean {
 	@XmlElement 
 	private int id;
 	@XmlElement 
-	private String isbn;
+	private String bid;
 	@XmlElement 
 	private int price;
-	@XmlElement 
 	private int quantity;
 
-	public POItemBean(int id, String isbn, int price, int quantity) {
+	public POItemBean() {
+		this.bid = null;
+	}
+	
+	public POItemBean(int id, String bid, int price, int quantity) {
 		this.id = id;
-		this.isbn = isbn;
+		this.bid = bid;
 		this.price = price;
 		this.quantity = quantity;
 	}
@@ -33,12 +36,12 @@ public class POItemBean {
 		this.id = id;
 	}
 
-	public String getIsbn() {
-		return isbn;
+	public String getBid() {
+		return bid;
 	}
 
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
+	public void setBid(String bid) {
+		this.bid = bid;
 	}
 
 	public int getPrice() {
@@ -48,7 +51,7 @@ public class POItemBean {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-
+	
 	public int getQuantity() {
 		return quantity;
 	}
