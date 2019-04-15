@@ -14,10 +14,11 @@ public class CommerceEventDAO {
 	}
 	
 	public List<CommerceEventBean> retrieve(int isbn) throws SQLException{
-		String query = "select * from CommerceEvent where isbn = " + isbn;
+		String query = "select * from CommerceEvent where isbn = ?";
 		List<CommerceEventBean> rv = new ArrayList<CommerceEventBean>();
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
+		p.setInt(1, isbn);
 		ResultSet r = p.executeQuery();
 		while(r.next()) {
 			String i = r.getString("ISBN");
@@ -32,9 +33,12 @@ public class CommerceEventDAO {
 	}
 	
 	public void create(String isbn, String timestamp, String eventType) throws SQLException {
-		String update = "INSERT INTO CommerceEvent (isbn, timestamp, eventType) VALUES ('" + isbn + "', " + timestamp + "', " + eventType + "');";
+		String update = "INSERT INTO CommerceEvent (isbn, timestamp, eventType) VALUES (?,?,?)";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
+		p.setString(1, isbn);
+		p.setString(2, timestamp);
+		p.setString(3, eventType);
 		p.executeUpdate();
 		p.close();
 		con.close();
