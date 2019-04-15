@@ -6,10 +6,9 @@
 3. Populate the database with the provided SQL file (*bookstoreStrawHatUnicorns.sql*)
 4. Configure the server settings in *dao.MySQLConnector.java* (Set your username and password as well as the database name)
 5. Project -> Clean the project
-6. Run as -> Maven build... -> Goals: clean install -> Run
-7. Run *ctrl.Start.java* on the server
-8. Access the webapp at **http://localhost:8080/EECS4314_Project/Store**
-    * Alternatively use **https://localhost:8443/EECS4314_Project/Store** if you have set up SSL
+6. Run *ctrl.Start.java* on the server
+7. Access the webapp at **http://localhost:8080/StrawHatUnicorns/Store**
+    * Alternatively use **https://localhost:8443/StrawHatUnicorns/Store** if you have set up SSL
 
 ### To set up SSL on the server:
 
@@ -50,8 +49,10 @@
 2. Import ClientProjects/Bookstore_REST.zip and ClientProjects/Bookstore_SOAP.war into Eclipse
 3. Run Bookstore_SOAP on the sever
    * Visit *http://localhost:8080/Bookstore_SOAP/sampleBookServiceProxy/TestClient.jsp
+   * You may have to update the end point using setEndPoint() in the webapp
 4. Run *Bookstore_REST/src/restClientTest/OrderServiceTest.java* using JUnit 5
    * You may have to alter your build path to include JUnit 5
+   * You may have to alter the url used in the REST request
 
 ### Running Test Cases From the REST/SOAP Clients:
 
