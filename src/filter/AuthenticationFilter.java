@@ -58,7 +58,7 @@ public class AuthenticationFilter implements Filter {
 					if(!list.isEmpty()) {
 						VisitEventBean bean = list.get(0);
 						long currentTime = System.currentTimeMillis();
-						if(currentTime- (Long.parseLong(bean.getTimestamp())) >1800000) {
+						if(currentTime- (Long.parseLong(bean.getTimestamp())) >1800000 && visitDAO.retrieveByToken(authToken).equals("active")) {
 							visitDAO.updateTimestamp(authToken, new Long(currentTime).toString());
 						}else {
 							visitDAO.updateStatus(authToken, "inactive");

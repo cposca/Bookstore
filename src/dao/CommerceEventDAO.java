@@ -13,15 +13,15 @@ public class CommerceEventDAO {
 	public CommerceEventDAO(){
 	}
 	
-	public List<CommerceEventBean> retrieve(int isbn) throws SQLException{
-		String query = "select * from CommerceEvent where isbn = ?";
+	public List<CommerceEventBean> retrieve(int bid) throws SQLException{
+		String query = "select * from CommerceEvent where bid = ?";
 		List<CommerceEventBean> rv = new ArrayList<CommerceEventBean>();
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
-		p.setInt(1, isbn);
+		p.setInt(1, bid);
 		ResultSet r = p.executeQuery();
 		while(r.next()) {
-			String i = r.getString("ISBN");
+			String i = r.getString("BID");
 			String timestamp = r.getString("TIMESTAMP");
 			String eventType = r.getString("EVENTTYPE");
 			rv.add(new CommerceEventBean(i,timestamp,eventType));
@@ -32,11 +32,11 @@ public class CommerceEventDAO {
 		return rv;
 	}
 	
-	public void create(String isbn, String timestamp, String eventType) throws SQLException {
-		String update = "INSERT INTO CommerceEvent (isbn, timestamp, eventType) VALUES (?,?,?)";
+	public void create(String bid, String timestamp, String eventType) throws SQLException {
+		String update = "INSERT INTO CommerceEvent (bid, timestamp, eventType) VALUES (?,?,?)";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
-		p.setString(1, isbn);
+		p.setString(1, bid);
 		p.setString(2, timestamp);
 		p.setString(3, eventType);
 		p.executeUpdate();
