@@ -16,7 +16,7 @@ import dao.VisitEventDAO;
 /**
  * Servlet Filter implementation class AuthenticationFilter
  */
-@WebFilter("/AuthenticationFilter")
+@WebFilter("*")
 public class AuthenticationFilter implements Filter {
 
     /**
