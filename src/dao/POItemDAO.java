@@ -15,13 +15,13 @@ public class POItemDAO {
 
 	public POItemDAO() {
 	}
-
-	public List<POItemBean> retrieve(int id) throws SQLException {
+	
+	public List<POItemBean> retrieve(int id) throws SQLException{
 		String query = "select * from POItem where id = ?";
 		List<POItemBean> rv = new ArrayList<POItemBean>();
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
-    p.setInt(1, id);
+		p.setInt(1, id);
 		ResultSet r = p.executeQuery();
 		while (r.next()) {
 			int i = r.getInt("ID");
@@ -86,5 +86,4 @@ public class POItemDAO {
 		}
 		return rv;
 	}
-
 }

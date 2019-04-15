@@ -1,0 +1,37 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <xsd:annotation>
+    <xsd:documentation xml:lang="en">
+     Purchase order schema for Example.com.
+     Copyright 2000 Example.com. All rights reserved.
+    </xsd:documentation>
+  </xsd:annotation>
+
+  <xsd:element name="purchaseOrder" type="PurchaseOrderType"/>
+
+  <xsd:complexType name="PurchaseOrderType">
+    <xsd:sequence>
+      <xsd:element name="shipTo" type="AddressType"/>
+      <xsd:element name="Items"  type="ItemsType" maxOccurs="unbounded" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="AddressType">
+    <xsd:sequence>
+      <xsd:element name="street" type="xsd:string"/>
+      <xsd:element name="province"   type="xsd:string"/>
+      <xsd:element name="zip"    type="xsd:string"/>
+      <xsd:element name="country"  type="xsd:string"/>
+      <xsd:element name="phone"  type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ItemsType">
+    <xsd:sequence>
+       <xsd:element name="productName" type="xsd:string"/>
+       <xsd:element name="price"  type="xsd:decimal"/>
+       <xsd:element name="partNum" type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>
