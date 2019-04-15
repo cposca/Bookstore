@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
 import bean.BookBean;
 import bean.ReviewBean;
 
@@ -145,6 +147,51 @@ public class BookDAO {
 
 		}
 		return book;
+	}
+
+	public List<BookBean> getBook(Set<String> bids) throws SQLException {
+
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		BookBean book = null;
+		String query = "select * from book WHERE bid IN (";
+		for (String s : bids) {
+			query = query + "'" + s + "', ";
+		}
+		query = query.substring(0, query.lastIndexOf(','));
+		query += ")";
+		List<BookBean> result = new ArrayList<BookBean>();
+		try {
+			connection = MySQLConnector.getConnection();
+			statement = connection.prepareStatement(query);
+			rs = statement.executeQuery();
+
+			while (rs.next()) {
+				String isbn = rs.getString("BID");
+				String title = rs.getString("TITLE");
+				String cat = rs.getString("CATEGORY");
+				int price = rs.getInt("PRICE");
+				book = new BookBean(isbn, title, cat, price);
+				result.add(book);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (connection != null) {
+				try {
+					rs.close();
+					statement.close();
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+
+				}
+
+			}
+
+		}
+		return result;
 	}
 
 	public void addReview(String name, String review, String bid) throws SQLException {
