@@ -2,19 +2,19 @@ package bean;
 
 public class UserBean {
 	
-	private String id;
+	private int id;
 	private String email;
 	private String fname;
 	private String lname;
 	
-	public UserBean(String id, String password, String email, String fname, String lname) {
+	public UserBean(int id, String email, String fname, String lname) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.fname = fname;
 		this.lname = lname;
 	}
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 	
