@@ -44,6 +44,15 @@
    * The line may also be reperesented by ```<transport-guarantee>NONE</transport-guarantee>```
 8. If the line contains the key word *CONFIDENTIAL* then leave it alone. If the line contains *NONE* then replace it with *CONFIDENTIAL*
 
+### Setting up REST/SOAP Clients:
+
+1. Locate ClientProjects/
+2. Import ClientProjects/Bookstore_REST.zip and ClientProjects/Bookstore_SOAP.war into Eclipse
+3. Run Bookstore_SOAP on the sever
+   * Visit *http://localhost:8080/Bookstore_SOAP/sampleBookServiceProxy/TestClient.jsp
+4. Run *Bookstore_REST/src/restClientTest/OrderServiceTest.java* using JUnit 5
+   * You may have to alter your build path to include JUnit 5
+
 ### Running Test Cases From the REST/SOAP Clients:
 
 Because of the absence of a real certificate, we are unable to test our services using clients without turning off SSL. To do this quickly and easily follow these steps:
