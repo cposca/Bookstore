@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import bean.AddressBean;
 
 public class AddressDAO {
@@ -12,22 +15,25 @@ public class AddressDAO {
 
 	}
 	
-	public AddressBean retrieve(int id) throws SQLException{
+	public List<AddressBean> retrieve(int id) throws SQLException{
 		String query = "select * from book where id = " + id;
+		List<AddressBean> rv = new ArrayList<AddressBean>();
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
-		r.next();
-		int i = r.getInt("ID");
-		String street = r.getString("STREET");
-		String province = r.getString("PROVINCE");
-		String country = r.getString("COUNTRY");
-		String zip = r.getString("ZIP");
-		String phone = r.getString("PHONE");
+		while(r.next()) {
+			int i = r.getInt("ID");
+			String street = r.getString("STREET");
+			String province = r.getString("PROVINCE");
+			String country = r.getString("COUNTRY");
+			String zip = r.getString("ZIP");
+			String phone = r.getString("PHONE");
+			rv.add(new AddressBean(i,street,province,country,zip,phone));
+		}
 		r.close();
 		p.close();
 		con.close();
-		return new AddressBean(i,street,province,country,zip,phone);
+		return rv;
 	}
 	
 	public void create(int id, String street, String province, String country, String zip, String phone) throws SQLException {

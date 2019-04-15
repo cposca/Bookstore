@@ -25,17 +25,17 @@ public class LoginDAO {
 	
 	public List<LoginBean> retrieve(String username) throws SQLException{
 		String query = "select * from Login where username = " + username;
-		List<LoginBean> rv = new ArrayList<LoginBean>();
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();
+		List<LoginBean> rv = new ArrayList<LoginBean>();
 		while(r.next()) {
 			int id = r.getInt("ID");
 			String user = r.getString("USERNAME");
 			String password = r.getString("PASSWORD");
 			String salt = r.getString("SALT");
 			rv.add(new LoginBean(id,user,password,salt));
-		}
+		}		
 		r.close();
 		p.close();
 		con.close();
