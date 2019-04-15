@@ -36,7 +36,7 @@ public class POItemDAO {
 	}
 	
 	public void create(int id, String bid, int price) throws SQLException {
-		String update = "INSERT INTO POItem (id, bid, price) VALUES (?,?,?);";
+		String update = "INSERT INTO POItem (id, bid, price) VALUES (?,?,?)";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
 		p.setInt(1, id);
@@ -48,7 +48,7 @@ public class POItemDAO {
 	}
 	
 	public void delete(int id, String bid) throws SQLException {
-		String update = "DELETE FROM POItem WHERE 'id' = ? AND bid = ?;";
+		String update = "DELETE FROM POItem WHERE 'id' = ? AND bid = ?";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
 		p.setInt(1, id);
@@ -58,17 +58,6 @@ public class POItemDAO {
 		con.close();
 	}
 
-	
-	/*
-	public void updateQuantity(int id, String isbn, int quantity) throws SQLException {
-		String update = "UPDATE POItem SET 'quantity'='quantity'" + (quantity >= 0? "+" : "-") + quantity + " WHERE 'id' = '" + id + "' AND 'bid' = '" + isbn + "';";
-		Connection con = MySQLConnector.getConnection();
-		PreparedStatement p = con.prepareStatement(update);
-		p.executeUpdate();
-		p.close();
-		con.close();
-	}
-*/
 	public Map<String, Integer> retrieveOrderCount() {
 		Map<String, Integer> rv = new HashMap<String, Integer>();
 		try {
@@ -82,7 +71,7 @@ public class POItemDAO {
 				i++;
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 		return rv;
 	}

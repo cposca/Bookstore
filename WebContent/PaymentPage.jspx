@@ -109,9 +109,8 @@
 								</TD>
 							</TR>
 							<c:set var="number" value="${number+1}"></c:set>
-						</c:forEach>
 
-						<TR>
+							<TR>
 
 							<TD></TD>
 							<TD></TD>
@@ -160,7 +159,7 @@
 		<br /> <br /> <br /> <br />
 
 	</form>
-
+</section>
 	<section id="footer"></section>
 </body>
 	</html>
