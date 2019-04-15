@@ -27,7 +27,7 @@ public class BookService extends Service{
 				return bookInfo;
 			}
 		} else {
-			bookInfo = bookData.getBook(bid);
+			bookInfo = bookData.getBook(bid).get(0);
 		}
 		
 		return bookInfo;
