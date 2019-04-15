@@ -48,10 +48,10 @@
 
 Because of the absence of a real certificate, we are unable to test our services using clients without turning off SSL. To do this quickly and easily follow these steps:
 
-1. Navigate to the web.xml file in WebContent/WEB-INF
+1. Navigate to the WebContent/WEB-INF/web.xml file in the project
 2. Scroll down to line 73 in the XML: ```<transport-guarantee>CONFIDENTIAL</transport-guarantee>```
 3. Replace line 73 with this snippet: ```<transport-guarantee>NONE</transport-guarantee>```
 
-The project should now be ready to test with SSL turned off momentarily in order to allow clients to connect.
+The project should now be ready to test with SSL turned off momentarily in order to allow clients to connect. Reverse this process when you'd like to reactivate SSL.
 
 
