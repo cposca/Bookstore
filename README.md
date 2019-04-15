@@ -44,7 +44,7 @@
    * The line may also be reperesented by ```<transport-guarantee>NONE</transport-guarantee>```
 8. If the line contains the key word *CONFIDENTIAL* then leave it alone. If the line contains *NONE* then replace it with *CONFIDENTIAL*
 
-### Running Test Cases:
+### Running Test Cases From the REST/SOAP Clients:
 
 Because of the absence of a real certificate, we are unable to test our services using clients without turning off SSL. To do this quickly and easily follow these steps:
 
