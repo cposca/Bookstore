@@ -16,11 +16,103 @@
 	crossorigin="anonymous" />
 </head>
 <body>
+
 	<h1>Confirm your order</h1>
+	<c:choose>
+		<c:when test="${sessionScope['username'] == null}">
+			<a href="Login">Login</a>&amp;nbsp;
+			
+		</c:when>
+		<c:otherwise>
+
+			<h4>Welcome ${sessionScope['username']}</h4>
+		</c:otherwise>
+	</c:choose>
+	<BR />
 	<a href="Store">Home</a> &amp;nbsp;
+	<br />
 
+	<h3>Your shipping/billing address</h3>
+	Address: ${address.getStreet()}
+	<br /> Province: ${address.getProvince()}
+	<br /> Country: ${address.getCountry()}
+	<br /> Zip: ${address.getZip()}
+	<br />
+	<BR />
 
+	<H3>Your Shopping Cart</H3>
+	<br />
+	<br />
+	<section id="banner"></section>
+	<section id="shoppingCart">
+		<form action="ShoppingCart" method="post">
 
+			<c:choose>
+				<c:when test="${shoppingCart ne null}">
+					<c:set var="number" value="1" />
+					<FIELDSET>
+						<TABLE>
+							<TR>
+								<TH>Item Number</TH>
+								<TH>Item ISBN</TH>
+								<TH>Item quantity</TH>
+								<TH>Unit price</TH>
+								<TH>Total</TH>
+							</TR>
+							<c:forEach items="${shoppingList}" var="key">
+								<TR>
+									<TD><c:out value="${number}"></c:out></TD>
+									<TD><c:out value="${key.bid}"></c:out></TD>
+									<TD><INPUT type="number" value="${key.quantity}" step="1"
+										name="${key.bid}"></INPUT></TD>
+									<TD><c:out value="${key.price}"></c:out></TD>
+									<TD><c:out value="${key.price*key.quantity}"></c:out></TD>
+								</TR>
+								<c:set var="number" value="${number+1}"></c:set>
+							</c:forEach>
+							<TR>
+								<TD></TD>
+								<TD></TD>
+								<TD>set quantity to zero to delete item<BR />
+									<BUTTON type="submit" name="update" value="true">update
+										units</BUTTON></TD>
+								<TD></TD>
+								<TD></TD>
+							</TR>
+							<TR>
+								<TD></TD>
+								<TD></TD>
+								<TD></TD>
+								<TD>sub-total:</TD>
+								<TD><c:out value="${ subTotal }"></c:out></TD>
+							</TR>
+							<TR>
+								<TD></TD>
+								<TD></TD>
+								<TD></TD>
+								<TD>Tax:</TD>
+								<TD><c:out value="${subTotal * 0.13 }"></c:out></TD>
+							</TR>
+							<TR>
+								<TD></TD>
+								<TD></TD>
+								<TD></TD>
+								<TD>Total:</TD>
+								<TD><c:out value="${ subTotal * 1.13 }"></c:out></TD>
+							</TR>
+						</TABLE>
+					</FIELDSET>
+				</c:when>
+				<c:otherwise>
+					<c:out value="The cart is empty"></c:out>
+				</c:otherwise>
+			</c:choose>
+			<c:if test="${shoppingList ne null}">
+				<input type="submit" name="confirm" value="confirm" />
+			</c:if>
+		</form>
+	</section>
+	<section id="footer"></section>
 </body>
 	</html>
 </jsp:root>
