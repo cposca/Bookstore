@@ -20,7 +20,7 @@ public class BookDAO {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet rs = null;
-		List<BookBean> bookBean = null;
+		List<BookBean> bookBean = new ArrayList<BookBean>();
 		String query = "select * from book";
 		if (category != null) {
 			query += " WHERE category = ?";
@@ -38,7 +38,7 @@ public class BookDAO {
 				statement.setString(1, "%" + search + "%");
 			}
 			rs = statement.executeQuery();
-			bookBean = new ArrayList<BookBean>();
+			//bookBean = new ArrayList<BookBean>();
 
 			while (rs.next()) {
 				String isbn = rs.getString("BID");
