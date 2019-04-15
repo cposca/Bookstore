@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:f="http://java.sun.com/jsp/jstl/fmt" version="2.0">
 	<jsp:directive.page contentType="text/html; charset=ISO-8859-1"
 		pageEncoding="ISO-8859-1" session="true" />
@@ -27,7 +28,7 @@
 			<h4>Welcome ${sessionScope['username']}</h4>
 		</c:otherwise>
 	</c:choose>
-		<BR />
+	<BR />
 	<a href="Store">Home</a>
 	<BR />
 	<section id="banner"></section>
@@ -39,10 +40,11 @@
 					<FIELDSET>
 						<TABLE>
 							<TR>
-								<TH>Item Number</TH>
-								<TH>Item ISBN</TH>
-								<TH>Item quantity</TH>
-								<TH>Unit price</TH>
+								<TH>Item Number &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;</TH>
+								<TH>Item ISBN &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;</TH>
+								<TH>Item quantity &amp;nbsp; &amp;nbsp; &amp;nbsp;
+									&amp;nbsp; &amp;nbsp; &amp;nbsp;</TH>
+								<TH>Unit price &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;</TH>
 								<TH>Total</TH>
 							</TR>
 							<c:forEach items="${shoppingList}" var="key">
@@ -51,8 +53,10 @@
 									<TD><c:out value="${key.bid}"></c:out></TD>
 									<TD><INPUT type="number" value="${key.quantity}" step="1"
 										name="${key.bid}"></INPUT></TD>
-									<TD><c:out value="${key.price}"></c:out></TD>
-									<TD><c:out value="${key.price*key.quantity}"></c:out></TD>
+									<TD><f:formatNumber type="currency">${key.price}</f:formatNumber>
+									</TD>
+									<TD><f:formatNumber type="currency">${key.price*key.quantity}</f:formatNumber>
+									</TD>
 								</TR>
 								<c:set var="number" value="${number+1}"></c:set>
 							</c:forEach>
@@ -69,22 +73,22 @@
 								<TD></TD>
 								<TD></TD>
 								<TD></TD>
-								<TD>sub-total:</TD>
-								<TD><c:out value="${ subTotal }"></c:out></TD>
+								<TD>Sub-total:</TD>
+								<TD><f:formatNumber type="currency">${subTotal}</f:formatNumber></TD>
 							</TR>
 							<TR>
 								<TD></TD>
 								<TD></TD>
 								<TD></TD>
 								<TD>Tax:</TD>
-								<TD><c:out value="${subTotal * 0.13 }"></c:out></TD>
+								<TD><f:formatNumber type="currency">${subTotal * 0.13}</f:formatNumber></TD>
 							</TR>
 							<TR>
 								<TD></TD>
 								<TD></TD>
 								<TD></TD>
 								<TD>Total:</TD>
-								<TD><c:out value="${ subTotal * 1.13 }"></c:out></TD>
+								<TD><f:formatNumber type="currency">${ subTotal * 1.13}</f:formatNumber></TD>
 							</TR>
 						</TABLE>
 					</FIELDSET>

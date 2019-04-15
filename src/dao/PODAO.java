@@ -50,7 +50,7 @@ public class PODAO {
 	}
 	
 	public void update(int id, String status) throws SQLException {
-		String update = "UPDATE PO SET 'status'= ? WHERE 'id' = ?;";
+		String update = "UPDATE PO SET 'status'= ? WHERE 'id' = ?";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
 		p.setString(1, status);
@@ -61,7 +61,7 @@ public class PODAO {
 	}
 	
 	public int countOrders() throws SQLException {
-		String query = "SELECT COUNT(*) FROM PO;";
+		String query = "SELECT COUNT(*) FROM PO";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
 		ResultSet r = p.executeQuery();

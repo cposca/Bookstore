@@ -33,7 +33,6 @@ public class LoginServlet extends HttpServlet {
      */
     public LoginServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -57,13 +56,14 @@ public class LoginServlet extends HttpServlet {
 			try {
 				LoginDAO l = new LoginDAO();
 				String username = request.getParameter("username");
+				String password = request.getParameter("password");
 				List<LoginBean> query = l.retrieve(username);
 				if(query.size() != 1) {
-					request.getSession().setAttribute("error", "Incorrect number of usernames detected! //TODO");
+					request.getSession().setAttribute("error", "Incorrect number of usernames detected!");
 				}else {
 					LoginBean bean = query.get(0);
 					String salt = bean.getSalt();
-					if(bytesToString(sha256(username,salt)).equals(bean.getPassword())) {
+					if(bytesToString(sha256(password,salt)).equals(bean.getPassword())) {
 						VisitEventDAO visitDAO = new VisitEventDAO();
 						String timestamp = (new Long(System.currentTimeMillis())).toString();
 						String status = "active";
@@ -71,16 +71,16 @@ public class LoginServlet extends HttpServlet {
 						byte[] salt2 = new byte[64];
 						random.nextBytes(salt2);
 						String token = bytesToString(sha256(username,DatatypeConverter.printBase64Binary(salt2)));
-						visitDAO.create(username, timestamp, status, token);
+//						visitDAO.create(username, timestamp, status, token);
 						request.getSession().setAttribute("sessionToken", token);
 						request.getSession().setAttribute("username",username);
 						request.getRequestDispatcher(successPage).forward(request,response);
 					}else {
 						request.getSession().setAttribute("error", "Incorrect Password!");
+						request.getRequestDispatcher(loginPage).forward(request,response);
 					}
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {

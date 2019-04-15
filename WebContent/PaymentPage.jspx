@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:jsp="http://java.sun.com/JSP/Page"
 	xmlns:f="http://java.sun.com/jsp/jstl/fmt" version="2.0">
 	<jsp:directive.page contentType="text/html; charset=ISO-8859-1"
@@ -39,80 +40,100 @@
 	<br /> Country: ${address.getCountry()}
 	<br /> Zip: ${address.getZip()}
 	<br />
+	<br />
 	<BR />
 
 	<H3>Your Shopping Cart</H3>
 	<br />
 	<br />
-	<section id="banner"></section>
-	<section id="shoppingCart">
-		<form action="ShoppingCart" method="post">
-			<c:choose>
-				<c:when test="${shoppingList ne null}">
-					<c:set var="number" value="1" />
-					<FIELDSET>
-						<TABLE>
-							<TR>
-								<TH>Item Number</TH>
-								<TH>Item ISBN</TH>
-								<TH>Item quantity</TH>
-								<TH>Unit price</TH>
-								<TH>Total</TH>
-							</TR>
-							<c:forEach items="${shoppingList}" var="key">
-								<TR>
-									<TD><c:out value="${number}"></c:out></TD>
-									<TD><c:out value="${key.bid}"></c:out></TD>
-									<TD><INPUT type="number" value="${key.quantity}" step="1"
-										name="${key.bid}"></INPUT></TD>
-									<TD><c:out value="${key.price}"></c:out></TD>
-									<TD><c:out value="${key.price*key.quantity}"></c:out></TD>
-								</TR>
-								<c:set var="number" value="${number+1}"></c:set>
-							</c:forEach>
-							<TR>
-								<TD></TD>
-								<TD></TD>
-								<TD>set quantity to zero to delete item<BR />
-									<BUTTON type="submit" name="update" value="true">update
-										units</BUTTON></TD>
-								<TD></TD>
-								<TD></TD>
-							</TR>
-							<TR>
-								<TD></TD>
-								<TD></TD>
-								<TD></TD>
-								<TD>sub-total:</TD>
-								<TD><c:out value="${ subTotal }"></c:out></TD>
-							</TR>
-							<TR>
-								<TD></TD>
-								<TD></TD>
-								<TD></TD>
-								<TD>Tax:</TD>
-								<TD><c:out value="${subTotal * 0.13 }"></c:out></TD>
-							</TR>
-							<TR>
-								<TD></TD>
-								<TD></TD>
-								<TD></TD>
-								<TD>Total:</TD>
-								<TD><c:out value="${ subTotal * 1.13 }"></c:out></TD>
-							</TR>
-						</TABLE>
-					</FIELDSET>
-				</c:when>
-				<c:otherwise>
-					<c:out value="The cart is empty"></c:out>
-				</c:otherwise>
-			</c:choose>
-			<c:if test="${shoppingList ne null}">
-				<a href="Payment" class="btn btn-primary">Checkout</a>
-			</c:if>
 
-		</form>
-	</section>
+
+
+	<form action="Payment" method="GET">
+
+		<LABEL>Please enter your Credit Card Information</LABEL>&amp;nbsp; <input
+			type="number" name="credit" id="credit" value="${credit}"></input> <br />
+
+		<c:if test="${error != null}">
+			<br />
+			<DIV style='color: red'>${error}</DIV>
+			<br />
+		</c:if>
+		<c:choose>
+			<c:when test="${shoppingList ne null}">
+				<c:set var="number" value="1" />
+				<FIELDSET>
+					<TABLE>
+						<TR>
+							<TH>Item Number &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;</TH>
+							<TH>Item ISBN &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;</TH>
+							<TH>Item quantity &amp;nbsp; &amp;nbsp; &amp;nbsp;&amp;nbsp;</TH>
+							<TH>Unit price &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;</TH>
+							<TH>Total</TH>
+						</TR>
+						<c:forEach items="${shoppingList}" var="key">
+							<TR>
+								<TD><c:out value="${number}"></c:out></TD>
+								<TD><c:out value="${key.bid}"></c:out></TD>
+								<TD><c:out value="${key.quantity}"></c:out></TD>
+								<TD><f:formatNumber type="currency">${key.price}</f:formatNumber>
+								</TD>
+								<TD><f:formatNumber type="currency">${key.price*key.quantity}</f:formatNumber>
+								</TD>
+							</TR>
+							<c:set var="number" value="${number+1}"></c:set>
+						</c:forEach>
+
+						<TR>
+
+							<TD></TD>
+							<TD></TD>
+							<TD></TD>
+							<TD><br /> <br />Sub-total:</TD>
+							<TD><br /> <br /> <f:formatNumber type="currency">${subTotal}</f:formatNumber></TD>
+						</TR>
+						<TR>
+							<TD></TD>
+							<TD></TD>
+							<TD></TD>
+							<TD>Tax:</TD>
+							<TD><f:formatNumber type="currency">${subTotal * 0.13}</f:formatNumber>
+							</TD>
+						</TR>
+						<TR>
+							<TD></TD>
+							<TD></TD>
+							<TD></TD>
+							<TD>Total:</TD>
+							<TD><f:formatNumber type="currency">${ subTotal * 1.13}</f:formatNumber>
+							</TD>
+						</TR>
+					</TABLE>
+				</FIELDSET>
+			</c:when>
+			<c:otherwise>
+				<c:out value="The cart is empty"></c:out>
+			</c:otherwise>
+		</c:choose>
+		<c:if test="${shoppingList ne null}">
+			<input type="submit" class="btn btn-primary" name="confirm"
+				id="confirm" value="Confirm Order" />
+		</c:if>
+
+
+
+
+		<c:if test="${approved == 'success'}">
+			<DIV style='color: green'>ORDER SUCCEEDED</DIV>
+		</c:if>
+
+		<c:if test="${approved == 'fail'}">
+			<DIV style='color: red'>ORDER FAILED</DIV>
+		</c:if>
+		<br /> <br /> <br /> <br />
+
+	</form>
+
 	<section id="footer"></section>
 </body>
 	</html>

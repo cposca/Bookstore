@@ -4,10 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import bean.POItemBean;
 
@@ -15,13 +15,13 @@ public class POItemDAO {
 
 	public POItemDAO() {
 	}
-	
-	public List<POItemBean> retrieve(int id) throws SQLException{
+
+	public List<POItemBean> retrieve(int id) throws SQLException {
 		String query = "select * from POItem where id = ?";
 		List<POItemBean> rv = new ArrayList<POItemBean>();
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
-		p.setInt(1, id);
+    p.setInt(1, id);
 		ResultSet r = p.executeQuery();
 		while (r.next()) {
 			int i = r.getInt("ID");
@@ -36,7 +36,7 @@ public class POItemDAO {
 	}
 	
 	public void create(int id, String bid, int price) throws SQLException {
-		String update = "INSERT INTO POItem (id, bid, price) VALUES (?,?,?);";
+		String update = "INSERT INTO POItem (id, bid, price) VALUES (?,?,?)";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
 		p.setInt(1, id);
@@ -48,7 +48,7 @@ public class POItemDAO {
 	}
 	
 	public void delete(int id, String bid) throws SQLException {
-		String update = "DELETE FROM POItem WHERE 'id' = ? AND bid = ?;";
+		String update = "DELETE FROM POItem WHERE 'id' = ? AND bid = ?";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
 		p.setInt(1, id);
@@ -57,17 +57,6 @@ public class POItemDAO {
 		p.close();
 		con.close();
 	}
-
-	
-	/*
-	public void updateQuantity(int id, String isbn, int quantity) throws SQLException {
-		String update = "UPDATE POItem SET 'quantity'='quantity'" + (quantity >= 0? "+" : "-") + quantity + " WHERE 'id' = '" + id + "' AND 'bid' = '" + isbn + "';";
-		Connection con = MySQLConnector.getConnection();
-		PreparedStatement p = con.prepareStatement(update);
-		p.executeUpdate();
-		p.close();
-		con.close();
-	}*/
 
 	public Map<String, Integer> retrieveOrderCount() {
 		Map<String, Integer> rv = new HashMap<String, Integer>();
@@ -82,7 +71,7 @@ public class POItemDAO {
 				i++;
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 		return rv;
 	}
