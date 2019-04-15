@@ -21,10 +21,9 @@ public class UserDAO {
 		List<UserBean> rv = new ArrayList<UserBean>();
 		while(r.next()) {
 			int id = r.getInt("ID");
-			String email = r.getString("EMAIL");
 			String fname = r.getString("FNAME");
 			String lname = r.getString("LNAME");
-			rv.add(new UserBean(id,email,fname,lname));
+			rv.add(new UserBean(id,fname,lname));
 		}
 		r.close();
 		p.close();
@@ -42,13 +41,8 @@ public class UserDAO {
 		return executeQuery(query);
 	}
 	
-	public List<UserBean> retrieveByEmail(String email) throws SQLException{
-		String query = "select * from user where email = '" + email;
-		return executeQuery(query);
-	}
-	
-	public void create(int id, String email, String fname, String lname) throws SQLException {
-		String update = "INSERT INTO user (id, email, fname, lname) VALUES ('" + id + "', " + email + "', " + fname + "', " + lname + "');";
+	public void create(int id, String fname, String lname) throws SQLException {
+		String update = "INSERT INTO user (id, fname, lname) VALUES ('" + id + "', " + fname + "', " + lname + "');";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
 		p.executeUpdate();
