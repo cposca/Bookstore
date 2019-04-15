@@ -23,7 +23,8 @@
 	<c:choose>
 		<c:when test="${sessionScope['username'] == null}">
 			<a href="Login">Login</a>&amp;nbsp;
-			
+			<DIV style='color: red'>${error3}</DIV>
+
 		</c:when>
 		<c:otherwise>
 
