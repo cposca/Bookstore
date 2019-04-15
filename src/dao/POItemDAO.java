@@ -21,10 +21,9 @@ public class POItemDAO {
 		ResultSet r = p.executeQuery();
 		while(r.next()) {
 			int i = r.getInt("ID");
-			String isbn = r.getString("ISBN");
+			String isbn = r.getString("BID");
 			int price = r.getInt("PRICE");
-			int quantity = r.getInt("QUANTITY");
-			rv.add(new POItemBean(i,isbn,price,quantity));
+			rv.add(new POItemBean(i,isbn,price));
 		}
 		r.close();
 		p.close();
