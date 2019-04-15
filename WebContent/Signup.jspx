@@ -22,9 +22,9 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 		<legend>Signup</legend>
 		<tr>
 			<c:choose>
-				<c:when test="${empty sessionScope['error']} }">
+				<c:when test="${empty sessionScope['error']}">
 				</c:when>
-				<c:when test="${!empty sessionScope['error']} }">
+				<c:when test="${!empty sessionScope['error']}">
 					<h1>${sessionScope['error']}</h1><br/>
 				</c:when>
 			</c:choose>
@@ -50,7 +50,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 				<label>First Name:</label>
 			</td><br/>
 			<td>
-				<input name="fname" type="text"></input>
+				<input name="fName" type="text"></input>
 			</td><br/>
 			<td>
 				<label>Last Name:</label>

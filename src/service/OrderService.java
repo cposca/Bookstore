@@ -3,11 +3,8 @@ package service;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.nio.file.FileSystems;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -93,7 +90,6 @@ public class OrderService extends Service{
 			System.out.println(sw.toString());
 			sw.close();
 		}
-
 		return output;
 	}
 	

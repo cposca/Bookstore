@@ -11,6 +11,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.DatatypeConverter;
+
 import bean.LoginBean;
 import dao.AddressDAO;
 import dao.LoginDAO;
@@ -62,48 +64,54 @@ public class SignupServlet extends HttpServlet {
 			String phone = request.getParameter("phone");
 			LoginDAO loginDAO = new LoginDAO();
 			List<LoginBean> list;
-			try {
-				list = loginDAO.retrieve(username);
-				if(list.isEmpty()) {
-					if(username.isEmpty() || password.isEmpty() || fName.isEmpty() || lName.isEmpty() || street.isEmpty() || country.isEmpty() || province.isEmpty() || zip.isEmpty() || phone.isEmpty()) {
-						request.getSession().setAttribute("error", "All fields need to be full");
-					} else {
-						if(password == repeatPassword) {
-							if(password.length() >= 6) {
-								SecureRandom random = new SecureRandom();
-								byte[] salt = new byte[64];
-								random.nextBytes(salt);
-								String encryptedPass = hashToString(sha256(password,salt));
-								loginDAO.create(username, encryptedPass, hashToString(salt));
-								list = loginDAO.retrieve(username);
-								LoginBean bean = list.get(0);
-								AddressDAO addDAO = new AddressDAO();
-								addDAO.create(bean.getId(), street, province, country, zip, phone);
-								UserDAO userDAO = new UserDAO();
-								userDAO.create(bean.getId(), fName, lName);
-								request.getRequestDispatcher(successPage).forward(request,response);
+				if(username.isEmpty() || password.isEmpty() || fName.isEmpty() || lName.isEmpty() || street.isEmpty() || country.isEmpty() || province.isEmpty() || zip.isEmpty() || phone.isEmpty()) {
+					request.getSession().setAttribute("error", "All fields need to be full");
+					request.getRequestDispatcher(signupPage).forward(request,response);
+				} else {
+					try {
+						list = loginDAO.retrieve(username);
+						if(list.isEmpty()) {
+							if(password.equals(repeatPassword)) {
+								if(password.length() >= 6) {
+									SecureRandom random = new SecureRandom();
+									byte[] salt = new byte[64];
+									random.nextBytes(salt);
+									String encryptedPass = hashToString(sha256(password,DatatypeConverter.printBase64Binary(salt)));
+									loginDAO.create(username, encryptedPass, DatatypeConverter.printBase64Binary(salt));
+									list = loginDAO.retrieve(username);
+									LoginBean bean = list.get(0);
+									AddressDAO addDAO = new AddressDAO();
+									addDAO.create(bean.getId(), street, province, country, zip, phone);
+									UserDAO userDAO = new UserDAO();
+									userDAO.create(bean.getId(), fName, lName);
+									request.getRequestDispatcher(successPage).forward(request,response);
+								}else {
+									request.getSession().setAttribute("error", "The password is too short");
+									request.getRequestDispatcher(signupPage).forward(request,response);
+								}
 							}else {
-								request.getSession().setAttribute("error", "The password is too short");
+								request.getSession().setAttribute("error", "The passwords do not match");
+								request.getRequestDispatcher(signupPage).forward(request,response);
 							}
 						}else {
-							request.getSession().setAttribute("error", "The passwords do not match");
+						request.getSession().setAttribute("error", "The username already exists!");
+						request.getRequestDispatcher(signupPage).forward(request,response);
 						}
+					} catch (SQLException e) {
+						e.printStackTrace();
 					}
-				} else {
-					request.getSession().setAttribute("error", "The username already exists!");
 				}
-			} catch (SQLException e) {
-				e.printStackTrace();
 			}
+		else {
+			request.getRequestDispatcher(signupPage).forward(request,response);
 		}
-		request.getRequestDispatcher(signupPage).forward(request,response);
 	}
 
-	private static byte[] sha256(String base, byte[] salt) {
+	private static byte[] sha256(String base, String salt) {
 	    try{
 	        MessageDigest digest = MessageDigest.getInstance("SHA-256");
 	        digest.update(base.getBytes("UTF-8"));
-	        digest.update(salt);
+	        digest.update(salt.getBytes("UTF-8"));
 	        return digest.digest();
 	    } catch(Exception ex){
 	       throw new RuntimeException(ex);

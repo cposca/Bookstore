@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.DatatypeConverter;
 
 import bean.LoginBean;
 import dao.LoginDAO;
@@ -62,14 +63,14 @@ public class LoginServlet extends HttpServlet {
 				}else {
 					LoginBean bean = query.get(0);
 					String salt = bean.getSalt();
-					if(bytesToString(sha256(username,salt.getBytes())) == bean.getPassword()) {
+					if(bytesToString(sha256(username,salt)).equals(bean.getPassword())) {
 						VisitEventDAO visitDAO = new VisitEventDAO();
 						String timestamp = (new Long(System.currentTimeMillis())).toString();
 						String status = "active";
 						SecureRandom random = new SecureRandom();
 						byte[] salt2 = new byte[64];
 						random.nextBytes(salt2);
-						String token = bytesToString(sha256(username,salt2));
+						String token = bytesToString(sha256(username,DatatypeConverter.printBase64Binary(salt2)));
 						visitDAO.create(username, timestamp, status, token);
 						request.getSession().setAttribute("sessionToken", token);
 						request.getSession().setAttribute("username",username);
@@ -87,11 +88,11 @@ public class LoginServlet extends HttpServlet {
 		}
 	}
 
-	private static byte[] sha256(String base, byte[] salt) {
+	private static byte[] sha256(String base, String salt) {
 	    try{
 	        MessageDigest digest = MessageDigest.getInstance("SHA-256");
 	        digest.update(base.getBytes("UTF-8"));
-	        digest.update(salt);
+	        digest.update(salt.getBytes("UTF-8"));
 	        return digest.digest();
 	    } catch(Exception ex){
 	       throw new RuntimeException(ex);
@@ -111,3 +112,4 @@ public class LoginServlet extends HttpServlet {
 	}
 	
 }
+

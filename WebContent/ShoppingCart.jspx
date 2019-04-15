@@ -19,17 +19,20 @@
 <body>
 	<c:choose>
 		<c:when test="${sessionScope['username'] == null}">
-			<a href="Login">Login</a>
+			<a href="Login">Login</a>&amp;nbsp;
+			
 		</c:when>
 		<c:otherwise>
 
 			<h4>Welcome ${sessionScope['username']}</h4>
 		</c:otherwise>
 	</c:choose>
+		<BR />
+	<a href="Store">Home</a>
+	<BR />
 	<section id="banner"></section>
 	<section id="shoppingCart">
 		<form action="ShoppingCart" method="post">
-
 			<c:choose>
 				<c:when test="${shoppingList ne null}">
 					<c:set var="number" value="1" />
@@ -45,9 +48,9 @@
 							<c:forEach items="${shoppingList}" var="key">
 								<TR>
 									<TD><c:out value="${number}"></c:out></TD>
-									<TD><c:out value="${key.isbn}"></c:out></TD>
+									<TD><c:out value="${key.bid}"></c:out></TD>
 									<TD><INPUT type="number" value="${key.quantity}" step="1"
-										name="${key.isbn}"></INPUT></TD>
+										name="${key.bid}"></INPUT></TD>
 									<TD><c:out value="${key.price}"></c:out></TD>
 									<TD><c:out value="${key.price*key.quantity}"></c:out></TD>
 								</TR>
@@ -74,7 +77,7 @@
 								<TD></TD>
 								<TD></TD>
 								<TD>Tax:</TD>
-								<TD><c:out value="${ subTotal * 0.13 }"></c:out></TD>
+								<TD><c:out value="${subTotal * 0.13 }"></c:out></TD>
 							</TR>
 							<TR>
 								<TD></TD>
@@ -90,9 +93,10 @@
 					<c:out value="The cart is empty"></c:out>
 				</c:otherwise>
 			</c:choose>
+			<c:if test="${shoppingList ne null}">
+				<a href="Payment" class="btn btn-primary">Checkout</a>
+			</c:if>
 
-			<a href="Payment" class="btn btn-primary">Checkout</a> <a
-				href="Store">Home</a>
 		</form>
 	</section>
 	<section id="footer"></section>

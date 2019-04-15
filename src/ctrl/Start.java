@@ -3,7 +3,6 @@ package ctrl;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +13,7 @@ import bean.BookBean;
 import bean.ReviewBean;
 import model.StoreModel;
 
-@WebServlet(urlPatterns = { "/Store", "/Store/*" })
+@WebServlet(urlPatterns = { "/Store", "/store" })
 public class Start extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	// private StoreModel storeObj;
