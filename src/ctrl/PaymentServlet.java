@@ -57,7 +57,7 @@ public class PaymentServlet extends HttpServlet {
 			List<LoginBean> query = lDao.retrieve(username);
 			AddressBean address = null;
 			LoginBean user = null;
-			OrderService order = null;
+			OrderService order = new OrderService();
 			if (query.size() > 0) {
 				AddressDAO addressDAO = new AddressDAO();
 				user = query.get(0);
@@ -69,8 +69,8 @@ public class PaymentServlet extends HttpServlet {
 
 			}
 
-			if (request.getAttribute("confirm") != null && address != null) {
-
+			if (request.getParameter("confirm") != null && address != null) {
+//&& address != null
 				counter++;
 				pass = true;
 
@@ -86,12 +86,16 @@ public class PaymentServlet extends HttpServlet {
 
 				request.setAttribute("approved", accept);
 
+				request.getRequestDispatcher("/PaymentPage.jspx").forward(request, response);
+
+			} else {
+				request.getRequestDispatcher("/PaymentPage.jspx").forward(request, response);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		request.getRequestDispatcher("/PaymentPage.jspx").forward(request, response);
+		// request.getRequestDispatcher("/PaymentPage.jspx").forward(request, response);
 	}
 
 	/**
