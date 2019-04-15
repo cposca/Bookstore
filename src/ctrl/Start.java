@@ -13,7 +13,7 @@ import bean.BookBean;
 import bean.ReviewBean;
 import model.StoreModel;
 
-@WebServlet(urlPatterns = { "/Store", "/store" })
+@WebServlet(urlPatterns = { "/Store", "/Store/*" })
 public class Start extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	// private StoreModel storeObj;

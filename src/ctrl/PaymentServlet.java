@@ -36,7 +36,10 @@ public class PaymentServlet extends HttpServlet {
 	 */
 	public PaymentServlet() {
 		super();
+
 	}
+
+	int counter = 0;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -48,10 +51,7 @@ public class PaymentServlet extends HttpServlet {
 
 		LoginDAO lDao = new LoginDAO();
 
-		int counter = 0;
-
-//		ShoppingCartModel shoppingCart = (ShoppingCartModel) request.getSession().getAttribute("shoppingCartModel");
-//		List<POItemBean> listt = shoppingCart.getShoppingList();
+		boolean pass;
 
 		try {
 			List<LoginBean> query = lDao.retrieve(username);
@@ -60,8 +60,6 @@ public class PaymentServlet extends HttpServlet {
 			OrderService order = null;
 			if (query.size() > 0) {
 				AddressDAO addressDAO = new AddressDAO();
-				// UserDAO userDAO = new UserDAO();
-				// UserBean user = userDAO.retrieve(query.get(0));
 				user = query.get(0);
 				List<AddressBean> addresses = addressDAO.retrieve(query.get(0).getId());
 				if (addresses.size() > 0) {
@@ -74,22 +72,19 @@ public class PaymentServlet extends HttpServlet {
 			if (request.getAttribute("confirm") != null && address != null) {
 
 				counter++;
+				pass = true;
 
 				if (counter % 3 == 0) {
-					request.setAttribute("order", "fail");
+					pass = false;
 				}
 
 				ShoppingCartModel shoppingCart = (ShoppingCartModel) request.getSession()
 						.getAttribute("shoppingCartModel");
 				List<POItemBean> list = shoppingCart.getShoppingList();
 
-				String accept = order.createOrder();
-				// String order = createOrder();
-				// String order = createOrder(user, list, true);
+				String accept = order.createOrder(user, list, pass);
 
-				// address
-				// request.getRequestDispatcher("/Comfirm.jspx").forward(request, response);
-				// return;
+				request.setAttribute("approved", accept);
 
 			}
 		} catch (SQLException e) {

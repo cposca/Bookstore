@@ -68,7 +68,7 @@ public class POItemDAO {
 		p.close();
 		con.close();
 	}
-
+*/
 	public Map<String, Integer> retrieveOrderCount() {
 		Map<String, Integer> rv = new HashMap<String, Integer>();
 		try {
@@ -86,5 +86,5 @@ public class POItemDAO {
 		}
 		return rv;
 	}
-*/
+
 }
