@@ -5,12 +5,12 @@
     <welcome-file>Signup.jspx</welcome-file>
   </welcome-file-list>
   <servlet>
-	<servlet-name>Start</servlet-name>
-	<servlet-class>ctrl.Start</servlet-class>
-	</servlet>
-	<servlet-mapping>
-	<servlet-name>Start</servlet-name>
-	<url-pattern></url-pattern>
+    <servlet-name>Start</servlet-name>
+    <servlet-class>ctrl.Start</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Start</servlet-name>
+    <url-pattern></url-pattern>
   </servlet-mapping>
   <filter>
     <filter-name>LogFilter</filter-name>
@@ -29,13 +29,13 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   <servlet>
-   <servlet-name>Jersey</servlet-name>
-   <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-   <load-on-startup>1</load-on-startup>
+    <servlet-name>Jersey</servlet-name>
+    <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-      <servlet-name>Jersey</servlet-name>
-      <url-pattern>/rest/*</url-pattern>
+    <servlet-name>Jersey</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
   <servlet>
     <display-name>Apache-Axis Servlet</display-name>

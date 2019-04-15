@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:f="http://java.sun.com/jsp/jstl/fmt" version="2.0">
+	<jsp:directive.page contentType="text/html; charset=ISO-8859-1"
+		pageEncoding="ISO-8859-1" session="true" />
+	<jsp:output doctype-root-element="html"
+		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+		omit-xml-declaration="true" />
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Insert title here</title>
+</head>
+<body>
+	<c:choose>
+		<c:when test="${topSellingBooks ne null }">
+			<TABLE>
+				<TR>
+					<TH>Top 10 selling books list:</TH>
+					<TH></TH>
+					<TH></TH>
+					<TH></TH>
+				</TR>
+				<TR>
+					<TH>ISBN</TH>
+					<TH>title</TH>
+					<TH>category</TH>
+					<TH>price</TH>
+				</TR>
+				<c:forEach items="${topSellingBooks}" var="key">
+					<TR>
+						<TD><c:out value="${key.isbn}"></c:out></TD>
+						<TD><c:out value="${key.title}"></c:out></TD>
+						<TD><c:out value="${key.category}"></c:out></TD>
+						<TD><c:out value="${key.price}"></c:out></TD>
+					</TR>
+				</c:forEach>
+			</TABLE>
+		</c:when>
+		<c:otherwise>
+		</c:otherwise>
+	</c:choose>
+</body>
+	</html>
+</jsp:root>
