@@ -68,6 +68,8 @@ public class PaymentServlet extends HttpServlet {
 				}
 
 			}
+			
+			request.setAttribute("error3", "You must be signed in to confirm your order!");
 
 			if (request.getParameter("confirm") != null && address != null) {
 
@@ -89,13 +91,13 @@ public class PaymentServlet extends HttpServlet {
 					List<POItemBean> list = shoppingCart.getShoppingList();
 
 					String accept = order.createOrder(user, list, pass);
-					//CALL WHEN SUCCEED
+					// CALL WHEN SUCCEED
 					CommerceEventDAO cDAO = new CommerceEventDAO();
-						try {
-							cDAO.create("0",new Long(System.currentTimeMillis()).toString(), "purchase");
-						} catch (SQLException e) {
-							e.printStackTrace();
-						}
+					try {
+						cDAO.create("0", new Long(System.currentTimeMillis()).toString(), "purchase");
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 					request.setAttribute("approved", accept);
 				}
 
