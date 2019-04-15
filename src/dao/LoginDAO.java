@@ -14,8 +14,8 @@ public class LoginDAO {
 	public LoginDAO() {
 	}
 	
-	public void create(int id, String username, String password, String salt) throws SQLException {
-		String update = "INSERT INTO Login (id, username, password, salt) VALUES ('" + id + "', " + username + "', " + password + "', " + salt + "');";
+	public void create(String username, String password, String salt) throws SQLException {
+		String update = "INSERT INTO Login (username, password, salt) VALUES ('" + username + "', " + password + "', " + salt + "');";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
 		p.executeUpdate();
