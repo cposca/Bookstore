@@ -39,7 +39,7 @@ public class PaymentServlet extends HttpServlet {
 
 	}
 
-	int counter = 0;
+	static int counter = 0;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -69,8 +69,8 @@ public class PaymentServlet extends HttpServlet {
 
 			}
 
-			if (request.getParameter("confirm") != null) {
-//&& address != null
+			if (request.getParameter("confirm") != null && address != null) {
+
 				counter++;
 				pass = true;
 
