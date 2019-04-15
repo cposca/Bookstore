@@ -4,16 +4,17 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "POItem")
+@XmlType(propOrder={"productName", "price", "partNum"})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class POItemBean {
 
-	@XmlElement 
+	@XmlElement(name="partNum")
 	private int id;
-	@XmlElement 
+	@XmlElement(name="productName")
 	private String bid;
-	@XmlElement 
+	@XmlElement(name="price")
 	private int price;
 	private int quantity;
 

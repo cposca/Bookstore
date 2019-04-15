@@ -1,5 +1,8 @@
 package bean;
 
+import javax.xml.bind.annotation.XmlType;
+
+@XmlType(name="Address", propOrder= {"street","province","zip","country","phone"})
 public class AddressBean {
 
 	private int id;
