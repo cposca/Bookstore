@@ -107,14 +107,13 @@ public class BookDAO {
 
 	}
 
-	public List<BookBean> getBook(String bid) throws SQLException {
+	public BookBean getBook(String bid) throws SQLException {
 
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet rs = null;
 		BookBean book = null;
 		String query = "select * from book WHERE bid = ?";
-		List<BookBean> rv = new ArrayList<BookBean>();
 		try {
 
 			connection = MySQLConnector.getConnection();
@@ -127,7 +126,7 @@ public class BookDAO {
 				String title = rs.getString("TITLE");
 				String cat = rs.getString("CATEGORY");
 				int price = rs.getInt("PRICE");
-				rv.add(new BookBean(isbn, title, cat, price));
+				book = new BookBean(isbn, title, cat, price);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -145,7 +144,7 @@ public class BookDAO {
 			}
 
 		}
-		return rv;
+		return book;
 	}
 
 	public void addReview(String name, String review, String bid) throws SQLException {
