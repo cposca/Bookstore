@@ -77,6 +77,7 @@ public class LoginServlet extends HttpServlet {
 						request.getRequestDispatcher(successPage).forward(request,response);
 					}else {
 						request.getSession().setAttribute("error", "Incorrect Password!");
+						request.getRequestDispatcher(loginPage).forward(request,response);
 					}
 				}
 			} catch (SQLException e) {
