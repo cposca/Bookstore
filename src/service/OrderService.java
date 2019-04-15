@@ -71,7 +71,6 @@ public class OrderService extends Service{
 			Marshaller marshaller = jc.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 			marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-			System.out.println(orders.get(0).getBid());
 			URL r = this.getClass().getResource("/");
 			String currentDirFile = URLDecoder.decode(r.getFile(), "UTF-8");
 			if (currentDirFile.startsWith("/")) {
@@ -79,15 +78,12 @@ public class OrderService extends Service{
 			}
 			currentDirFile = currentDirFile.substring(0, currentDirFile.length() - 16);
 			
-			System.out.println(currentDirFile);
-			
 			SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 			Schema sc = sf.newSchema(new File(currentDirFile + "export/po.xsd"));
 			marshaller.setSchema(sc);
 			StringWriter sw = new StringWriter();
 			marshaller.marshal(wr, new StreamResult(sw));
 			output = sw.toString();
-			System.out.println(sw.toString());
 			sw.close();
 		}
 		return output;
