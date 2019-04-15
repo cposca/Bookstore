@@ -54,9 +54,9 @@
 		<LABEL>Please enter your Credit Card Information</LABEL>&amp;nbsp; <input
 			type="number" name="credit" id="credit" value="${credit}"></input> <br />
 
-		<c:if test="${error != null}">
+		<c:if test="${error2 != null}">
 			<br />
-			<DIV style='color: red'>${error}</DIV>
+			<DIV style='color: red'>${error2}</DIV>
 			<br />
 		</c:if>
 		<c:choose>
