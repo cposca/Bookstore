@@ -9,12 +9,24 @@ import java.util.List;
 
 import bean.AddressBean;
 
+/**
+ * 
+ * @author Strawhat Unicorns
+ * This class facilitates between the AddressBean object and address table in mysql table. 
+ *
+ */
 public class AddressDAO {
 
 	public AddressDAO() {
 
 	}
 
+	/**
+	 * This function will retrieve all the addresses stored in address database table.
+	 * @param id
+	 * @return list of all address objects.
+	 * @throws SQLException
+	 */
 	public List<AddressBean> retrieve(int id) throws SQLException {
 		String query = "select * from address where id = ?";
 		List<AddressBean> rv = new ArrayList<AddressBean>();
@@ -39,10 +51,15 @@ public class AddressDAO {
 
 	public void create(int id, String street, String province, String country, String zip, String phone)
 			throws SQLException {
-		String update = "INSERT INTO address (id, street, province, country, zip, phone) VALUES ('" + id + "', "
-				+ street + "', " + province + "', " + country + "', " + zip + "', " + phone + "');";
+		String update = "INSERT INTO address (id, street, province, country, zip, phone) VALUES (?,?,?,?,?,?)";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
+		p.setInt(1, id);
+		p.setString(2, street);
+		p.setString(3, province);
+		p.setString(4, country);
+		p.setString(5, zip);
+		p.setString(6, phone);
 		p.executeUpdate();
 		p.close();
 		con.close();
@@ -50,10 +67,15 @@ public class AddressDAO {
 
 	public void update(int id, String street, String province, String country, String zip, String phone)
 			throws SQLException {
-		String update = "UPDATE address SET street = '" + street + "', province = '" + province + "', country = '"
-				+ country + "', zip = '" + zip + "', phone = " + phone + "' WHERE id = " + id;
+		String update = "UPDATE address SET street = '?', province = '?', country = '?', zip = '?', phone = '?' WHERE id = ";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
+		p.setInt(1, id);
+		p.setString(2, street);
+		p.setString(3, province);
+		p.setString(4, country);
+		p.setString(5, zip);
+		p.setString(6, phone);
 		p.executeUpdate();
 		p.close();
 		con.close();

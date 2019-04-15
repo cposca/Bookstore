@@ -15,10 +15,11 @@ public class VisitEventDAO {
 	}
 	
 	public List<VisitEventBean> retrieveByStatus(String status) throws SQLException{
-		String query = "select * from VisitEvent where status = '" + status + "';";
+		String query = "select * from VisitEvent where status = '?'";
 		List<VisitEventBean> rv = new ArrayList<VisitEventBean>();
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
+		p.setString(1, status);
 		ResultSet r = p.executeQuery();
 		while(r.next()) {
 			int id = r.getInt("ID");
@@ -35,10 +36,11 @@ public class VisitEventDAO {
 	}
 	
 	public List<VisitEventBean> retrieveByUsername(String username) throws SQLException{
-		String query = "select * from VisitEvent where username = '" + username + "';";
+		String query = "select * from VisitEvent where username = '?'";
 		List<VisitEventBean> rv = new ArrayList<VisitEventBean>();
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
+		p.setString(1, username);
 		ResultSet r = p.executeQuery();
 		while(r.next()) {
 			int id = r.getInt("ID");
@@ -55,10 +57,11 @@ public class VisitEventDAO {
 	}
 	
 	public List<VisitEventBean> retrieveByToken(String token) throws SQLException{
-		String query = "select * from VisitEvent where token = '" + token + "';";
+		String query = "select * from VisitEvent where token = '?'";
 		List<VisitEventBean> rv = new ArrayList<VisitEventBean>();
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
+		p.setString(1, token);
 		ResultSet r = p.executeQuery();
 		while(r.next()) {
 			int id = r.getInt("ID");
@@ -75,9 +78,36 @@ public class VisitEventDAO {
 	}
 	
 	public void create(String username, String timestamp, String status, String token) throws SQLException {
-		String update = "INSERT INTO VisitEvent (username, timestamp, status, token) VALUES ('" + username + "', " + timestamp + "', " + status + "', " + token + "');";
+		String update = "INSERT INTO VisitEvent (username, timestamp, status, token, bid) VALUES (?,?,?,?,?)";
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(update);
+		p.setString(1, username);
+		p.setString(2, timestamp);
+		p.setString(3, status);
+		p.setString(4, token);
+		p.setString(5, "b003");
+		p.executeUpdate();
+		p.close();
+		con.close();
+	}
+	
+	public void updateTimestamp(String token, String timestamp) throws SQLException {
+		String update = "UPDATE VisitEvent SET 'timestamp'= ? WHERE 'token' = ?";
+		Connection con = MySQLConnector.getConnection();
+		PreparedStatement p = con.prepareStatement(update);
+		p.setString(1, timestamp);
+		p.setString(2, token);
+		p.executeUpdate();
+		p.close();
+		con.close();
+	}
+	
+	public void updateStatus(String token, String status) throws SQLException {
+		String update = "UPDATE VisitEvent SET 'status'= ? WHERE 'token' = ?";
+		Connection con = MySQLConnector.getConnection();
+		PreparedStatement p = con.prepareStatement(update);
+		p.setString(1, status);
+		p.setString(2, token);
 		p.executeUpdate();
 		p.close();
 		con.close();

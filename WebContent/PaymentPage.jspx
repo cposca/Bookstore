@@ -53,22 +53,52 @@
 	<H3>Your Shopping Cart</H3>
 	<br />
 	<br />
-
-
-	<form action="Payment" method="GET">
-		<c:choose>
-			<c:when test="${shoppingList ne null}">
-				<c:set var="number" value="1" />
-				<FIELDSET>
-					<TABLE>
-						<TR>
-							<TH>Item Number &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;</TH>
-							<TH>Item ISBN &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;</TH>
-							<TH>Item quantity &amp;nbsp; &amp;nbsp; &amp;nbsp;&amp;nbsp;</TH>
-							<TH>Unit price &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;</TH>
-							<TH>Total</TH>
-						</TR>
-						<c:forEach items="${shoppingList}" var="key">
+	<section id="banner"></section>
+	<section id="shoppingCart">
+		<form action="ShoppingCart" method="post">
+			<c:choose>
+				<c:when test="${shoppingList ne null}">
+					<c:set var="number" value="1" />
+					<FIELDSET>
+						<TABLE border="1">
+							<TR>
+								<TH>Item Number &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;</TH>
+								<TH>Item ISBN &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;</TH>
+								<TH>Item quantity &amp;nbsp; &amp;nbsp; &amp;nbsp;
+									&amp;nbsp; &amp;nbsp; &amp;nbsp;</TH>
+								<TH>Unit price &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;</TH>
+								<TH>Total</TH>
+							</TR>
+							<c:forEach items="${shoppingList}" var="key">
+								<TR>
+									<TD><c:out value="${number}"></c:out></TD>
+									<TD><c:out value="${key.bid}"></c:out></TD>
+									<TD><INPUT type="number" value="${key.quantity}" step="1"
+										name="${key.bid}"></INPUT></TD>
+									<TD><f:formatNumber type="currency">${key.price}</f:formatNumber>
+									</TD>
+									<TD><f:formatNumber type="currency">${key.price*key.quantity}</f:formatNumber>
+									</TD>
+								</TR>
+								<c:set var="number" value="${number+1}"></c:set>
+							</c:forEach>
+							<TR>
+								<TD></TD>
+								<TD></TD>
+								<TD>set quantity to zero to delete item<BR />
+									<BUTTON type="submit" name="update" value="true">update
+										units</BUTTON></TD>
+								<TD></TD>
+								<TD></TD>
+							</TR>
+							<TR>
+								<TD></TD>
+								<TD></TD>
+								<TD></TD>
+								<TD>sub-total:</TD>
+								<TD><f:formatNumber type="currency">${subTotal}</f:formatNumber>
+								</TD>
+							</TR>
 							<TR>
 								<TD><c:out value="${number}"></c:out></TD>
 								<TD><c:out value="${key.bid}"></c:out></TD>

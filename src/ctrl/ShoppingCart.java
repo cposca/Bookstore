@@ -59,9 +59,11 @@ public class ShoppingCart extends HttpServlet {
 				parametersMap.remove("update");
 				shoppingCart.updateCart(parametersMap);
 				setShoppingAttributes(request);
+				request.getSession().setAttribute("error", null);
 				response.sendRedirect("ShoppingCart.jspx");
 			} else {
-				// TODO: Set error
+				request.getSession().setAttribute("error", "The shopping cart is empty");
+				response.sendRedirect("ShoppingCart.jspx");
 			}
 		} else if (request.getParameter("addToCart") != null) {
 			/**
