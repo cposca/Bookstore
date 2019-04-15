@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="US-ASCII" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<jsp:directive.page contentType="text/html; charset=US-ASCII" 
+		pageEncoding="US-ASCII" session="true"/>
+	<jsp:output doctype-root-element="html"
+		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+		omit-xml-declaration="true" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>%TODO%%%%%%%%%%%%%%%%%%%%%</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous" />
+<script type="text/javascript" src="res/signup.js">;</script>
+</head>
+<body>
+<h1>Success! Click below to main page.</h1>
+<br/><button action='submit' name='success' >Finish</button>
+</body>
+</html>
+</jsp:root>
