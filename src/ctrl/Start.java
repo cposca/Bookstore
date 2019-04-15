@@ -16,21 +16,12 @@ import model.StoreModel;
 @WebServlet(urlPatterns = { "/Store", "/Store/*" })
 public class Start extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	// private StoreModel storeObj;
 
 	public Start() {
 		super();
 	}
 
 	public void init() throws ServletException {
-		// ServletContext context = getServletContext();
-//		try {
-////			storeObj = new StoreModel();
-////			context.setAttribute("storeModel", storeObj);
-//		} catch (ClassNotFoundException e) {
-//			// TODO make an exception
-//			e.printStackTrace();
-//		}
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -49,7 +40,8 @@ public class Start extends HttpServlet {
 				BookBean book = storeModel.getBookDetails(request.getParameter("bid"));
 				request.setAttribute("book", book);
 				List<ReviewBean> reviews = storeModel.getReviewList(request.getParameter("bid"));
-				request.setAttribute("reviews", reviews);
+				if(reviews != null)
+					request.setAttribute("reviews", reviews);
 				request.getRequestDispatcher("/Book.jspx").forward(request, response);
 			} else {
 				List<BookBean> books = storeModel.retrieveBooks(request.getParameter("category"),
@@ -62,8 +54,6 @@ public class Start extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// request.getRequestDispatcher("/MainPage.jspx").forward(request, response);
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
