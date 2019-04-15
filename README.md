@@ -1,5 +1,5 @@
 # Bookstore
-**Installation:**
+### Installation:
 
 1. Clone/Download the project from the master branch or import the provided war file
 2. Open the project in eclipse and connect to a MySQL server
@@ -11,7 +11,7 @@
 8. Access the webapp at **http://localhost:8080/EECS4314_Project/Store**
     * Alternatively use **https://localhost:8443/EECS4314_Project/Store** if you have set up SSL
 
-**To set up SSL on the server:**
+### To set up SSL on the server:
 
 1. Open your server installation directory for Tomcat
 2. Locate the *server.xml* file
@@ -44,7 +44,7 @@
    * The line may also be reperesented by ```<transport-guarantee>NONE</transport-guarantee>```
 8. If the line contains the key word *CONFIDENTIAL* then leave it alone. If the line contains *NONE* then replace it with *CONFIDENTIAL*
 
-**Running Test Cases:**
+### Running Test Cases:
 
 Because of the absence of a real certificate, we are unable to test our services using clients without turning off SSL. To do this quickly and easily follow these steps:
 
