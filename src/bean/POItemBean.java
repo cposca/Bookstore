@@ -1,12 +1,13 @@
 package bean;
 
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType(propOrder={"productName", "price", "partNum"})
+@XmlType(name="item",propOrder={"bid", "price", "id"})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class POItemBean {
 
@@ -14,8 +15,9 @@ public class POItemBean {
 	private int id;
 	@XmlElement(name="productName")
 	private String bid;
-	@XmlElement(name="price")
+	@XmlElement
 	private int price;
+	@XmlTransient
 	private int quantity;
 
 	public POItemBean() {
@@ -38,7 +40,7 @@ public class POItemBean {
 	}
 
 	public String getBid() {
-		return bid;
+		return this.bid;
 	}
 
 	public void setBid(String bid) {

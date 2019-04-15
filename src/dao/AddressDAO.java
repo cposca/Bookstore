@@ -16,10 +16,11 @@ public class AddressDAO {
 	}
 	
 	public List<AddressBean> retrieve(int id) throws SQLException{
-		String query = "select * from book where id = " + id;
+		String query = "select * from address where id = ?";
 		List<AddressBean> rv = new ArrayList<AddressBean>();
 		Connection con = MySQLConnector.getConnection();
 		PreparedStatement p = con.prepareStatement(query);
+		p.setInt(1, id);
 		ResultSet r = p.executeQuery();
 		while(r.next()) {
 			int i = r.getInt("ID");

@@ -2,14 +2,14 @@ package bean;
 
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="purchaseOrder")
 public class POWrapperBean {
-	@XmlAttribute(name = "shipTo")
+	@XmlElement(name = "shipTo")
 	private AddressBean addressToShip;
-	@XmlAttribute(name = "Items")
+	@XmlElement(name = "Items")
 	private List<POItemBean> items;
 
 	public POWrapperBean() {

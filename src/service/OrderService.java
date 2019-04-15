@@ -1,6 +1,13 @@
 package service;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.file.FileSystems;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -10,6 +17,7 @@ import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
@@ -50,30 +58,43 @@ public class OrderService extends Service{
 	
 	@GET
 	@Path("/get/")
-	@Produces(MediaType.APPLICATION_XML)
-	public List<POItemBean> getOrdersByPartNumber(@DefaultValue("0") @QueryParam("partNumber") int partNumber) throws SQLException, JAXBException, SAXException {
+	@Produces(MediaType.TEXT_XML)
+	public String getOrdersByPartNumber(@DefaultValue("0") @QueryParam("partNumber") int partNumber) throws SQLException, JAXBException, SAXException, IOException {
+		String output = "";
 		List<POItemBean> orders = null;
 		if (!daoAvailable) {
 			if (!InstantiateDAO()) {
-				return orders;
+				return output;
 			}
 		} else {
 			orders = orderItemInformation.retrieve(partNumber);
+			AddressBean bean = addressInformation.retrieve(partNumber).get(0);
+			POWrapperBean wr = new POWrapperBean(bean, orders);
+			JAXBContext jc = JAXBContext.newInstance(wr.getClass());
+			Marshaller marshaller = jc.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+			marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+			System.out.println(orders.get(0).getBid());
+			URL r = this.getClass().getResource("/");
+			String currentDirFile = URLDecoder.decode(r.getFile(), "UTF-8");
+			if (currentDirFile.startsWith("/")) {
+				currentDirFile = currentDirFile.replaceFirst("/", "");
+			}
+			currentDirFile = currentDirFile.substring(0, currentDirFile.length() - 16);
+			
+			System.out.println(currentDirFile);
+			
+			SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+			Schema sc = sf.newSchema(new File(currentDirFile + "export/po.xsd"));
+			marshaller.setSchema(sc);
+			StringWriter sw = new StringWriter();
+			marshaller.marshal(wr, new StreamResult(sw));
+			output = sw.toString();
+			System.out.println(sw.toString());
+			sw.close();
 		}
-		AddressBean bean = addressInformation.retrieve(partNumber).get(0);
-		POWrapperBean wr = new POWrapperBean(bean, orders);
-		JAXBContext jc = JAXBContext.newInstance(wr.getClass());
-		Marshaller marshaller = jc.createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-		
-		String currentDirFile = System.getProperty("user.dir");
-		
-		SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-		Schema sc = sf.newSchema(new File(currentDirFile + "/WebContent/export/po.xsd"));
-		marshaller.setSchema(sc);
-		
-		return orders;
+
+		return output;
 	}
 	
 	@GET
@@ -85,7 +106,11 @@ public class OrderService extends Service{
 		if (user == null) {
 			return "fail";
 		}
-		orderInformation.create(count + 1, user.getLname(), user.getFname(), "ORDERED", user.getId());
+		if (orderStatus) {
+			orderInformation.create(count + 1, user.getLname(), user.getFname(), "ORDERED", user.getId());
+		} else {
+			orderInformation.create(count + 1, user.getLname(), user.getFname(), "DENIED", user.getId());
+		}
 		for (int i = 0; i < shoppingCart.size(); i++) {
 			POItemBean book = shoppingCart.get(i);
 			orderItemInformation.create(count + 1, book.getBid(), book.getPrice());
