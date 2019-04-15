@@ -65,7 +65,11 @@ public class OrderService extends Service{
 			}
 		} else {
 			orders = orderItemInformation.retrieve(partNumber);
-			AddressBean bean = addressInformation.retrieve(partNumber).get(0);
+			List<AddressBean> beanList = addressInformation.retrieve(partNumber);
+			if (beanList.size() <= 0) {
+				return output + "}";
+			}
+			AddressBean bean = beanList.get(0);
 			output += "\"Purchase Order\": {\n";
 			if (bean != null) {
 				output += "\t\"Ship To\": {\n";
@@ -89,7 +93,6 @@ public class OrderService extends Service{
 			}
 		}
 		output += "}";
-		System.out.println(output);
 		return output;
 	}
 	
@@ -105,7 +108,11 @@ public class OrderService extends Service{
 			}
 		} else {
 			orders = orderItemInformation.retrieve(partNumber);
-			AddressBean bean = addressInformation.retrieve(partNumber).get(0);
+			List<AddressBean> beanList = addressInformation.retrieve(partNumber);
+			if (beanList.size() <= 0) {
+				return output;
+			}
+			AddressBean bean = beanList.get(0);
 			POWrapperBean wr = new POWrapperBean(bean, orders);
 			JAXBContext jc = JAXBContext.newInstance(wr.getClass());
 			Marshaller marshaller = jc.createMarshaller();
@@ -133,7 +140,12 @@ public class OrderService extends Service{
 	@Path("/create/")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String createOrder(LoginBean login, List<POItemBean> shoppingCart, boolean orderStatus) throws SQLException {
-		UserBean user = userInformation.retrieveById(login.getId()).get(0);
+		UserBean user;
+		try {
+		user = userInformation.retrieveById(login.getId()).get(0);
+		} catch(NullPointerException e) {
+			return "fail";
+		}
 		int count = orderInformation.countOrders();
 		if (user == null) {
 			return "fail";
