@@ -31,13 +31,13 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 				<label>Username:</label>
 			</td>
 			<br/><td>
-				<input name="namePrefix" type="text" value="${sessionScope['namePrefix']}"></input>
+				<input name="username" type="text" value="${sessionScope['namePrefix']}"></input>
 			</td>
 			<br/><td>
 				<label>Password:</label>
 			</td>
 			<br/><td>
-				<input name="minCreditTaken" type="text" value="${sessionScope['minCreditTaken']}"/>
+				<input name="password" type="password" value="${sessionScope['minCreditTaken']}"/>
 			</td>
 			<br/><button action='submit' name='signup' >Sign Up</button>
 			<button action='submit' name='login' >Login</button>
