@@ -40,5 +40,4 @@ public class POWrapperBean {
 	public void setItems(List<POItemBean> items) {
 		this.items = items;
 	}
-	
 }

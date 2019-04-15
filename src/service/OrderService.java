@@ -18,7 +18,6 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import org.json.JSONObject;
 import org.xml.sax.SAXException;
 
 import bean.AddressBean;
@@ -67,7 +66,6 @@ public class OrderService extends Service{
 		} else {
 			orders = orderItemInformation.retrieve(partNumber);
 			AddressBean bean = addressInformation.retrieve(partNumber).get(0);
-			POWrapperBean wr = new POWrapperBean(bean, orders);
 			output += "\"Purchase Order\": {\n";
 			if (bean != null) {
 				output += "\t\"Ship To\": {\n";
