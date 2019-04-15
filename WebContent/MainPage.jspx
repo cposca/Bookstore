@@ -20,9 +20,19 @@
 	<h1>Book Store</h1>
 
 	<BR />
+	<c:choose>
+		<c:when test="${sessionScope['username'] == null}">
+			<a href="Login">Login</a>
+		</c:when>
+		<c:otherwise>
+
+			<h4>Welcome ${sessionScope['username']}</h4>
+		</c:otherwise>
+	</c:choose>
+	<BR />
 	<a href="Store">Home</a> &amp;nbsp;
-	<a href="Login">Login</a> &amp;nbsp;
-	<a href="ShoppingCart">Shopping Cart</a>
+	<a href="ShoppingCart">Shopping Cart</a> &amp;nbsp;
+
 	<BR />
 	<BR />
 
