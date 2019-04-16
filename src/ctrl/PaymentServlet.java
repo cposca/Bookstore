@@ -19,6 +19,7 @@ import bean.LoginBean;
 import bean.POItemBean;
 import bean.UserBean;
 import dao.AddressDAO;
+import dao.CommerceEventDAO;
 import dao.LoginDAO;
 import dao.UserDAO;
 import model.ShoppingCartModel;
@@ -39,7 +40,7 @@ public class PaymentServlet extends HttpServlet {
 
 	}
 
-	int counter = 0;
+	static int counter = 0;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -48,7 +49,6 @@ public class PaymentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String username = (String) request.getSession().getAttribute("username");
-
 		LoginDAO lDao = new LoginDAO();
 
 		boolean pass;
@@ -68,23 +68,38 @@ public class PaymentServlet extends HttpServlet {
 				}
 
 			}
+			
+			request.setAttribute("error3", "You must be signed in to confirm your order!");
 
 			if (request.getParameter("confirm") != null && address != null) {
-//&& address != null
+
 				counter++;
 				pass = true;
 
-				if (counter % 3 == 0) {
-					pass = false;
+				String credit = request.getParameter("credit");
+
+				if (credit == null || credit.length() == 0) {
+					request.setAttribute("error2", "Your credit card information cannot be empty!");
+				} else {
+
+					if (counter % 3 == 0) {
+						pass = false;
+					}
+
+					ShoppingCartModel shoppingCart = (ShoppingCartModel) request.getSession()
+							.getAttribute("shoppingCartModel");
+					List<POItemBean> list = shoppingCart.getShoppingList();
+
+					String accept = order.createOrder(user, list, pass);
+					// CALL WHEN SUCCEED
+					CommerceEventDAO cDAO = new CommerceEventDAO();
+					try {
+						cDAO.create("0", new Long(System.currentTimeMillis()).toString(), "purchase");
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					request.setAttribute("approved", accept);
 				}
-
-				ShoppingCartModel shoppingCart = (ShoppingCartModel) request.getSession()
-						.getAttribute("shoppingCartModel");
-				List<POItemBean> list = shoppingCart.getShoppingList();
-
-				String accept = order.createOrder(user, list, pass);
-
-				request.setAttribute("approved", accept);
 
 				request.getRequestDispatcher("/PaymentPage.jspx").forward(request, response);
 
